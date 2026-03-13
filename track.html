@@ -14,15 +14,40 @@
       position: relative;
       z-index: 1;
       min-height: 100vh;
-      padding: 7rem 1.5rem 4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .tracker__inner {
+    /* ── HERO / LOOKUP SECTION ────────────────────────────────── */
+    .tracker__hero {
       width: 100%;
-      max-width: 520px;
+      padding: 7rem 1.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .tracker__hero-inner {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .tracker__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--color-gold);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.25s ease;
+      align-self: flex-start;
+    }
+
+    .tracker__back:hover {
+      color: var(--color-gold-light);
     }
 
     .tracker__eyebrow {
@@ -55,12 +80,28 @@
       margin-bottom: 2.5rem;
     }
 
-    /* ── LOOKUP CARD ──────────────────────────────────────────── */
+    /* ── INLINE LOOKUP FORM ──────────────────────────────────── */
     .lookup {
-      background: var(--color-navy-light);
-      border: 1px solid var(--color-border);
-      padding: 2.5rem;
-      margin-bottom: 2rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .lookup__field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lookup__label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: 0.4rem;
+      text-align: left;
     }
 
     .lookup__input {
@@ -68,11 +109,10 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(201, 168, 76, 0.2);
       color: var(--color-cream);
-      padding: 0.75rem 1rem;
+      padding: 0.8rem 1rem;
       font-family: var(--font-mono);
       font-size: 0.88rem;
       font-weight: 300;
-      margin-bottom: var(--space-md);
       outline: none;
       transition: border-color 0.25s ease, background 0.25s ease;
       -webkit-appearance: none;
@@ -94,37 +134,21 @@
       text-transform: uppercase;
     }
 
-    .lookup__hint {
-      font-size: 0.7rem;
-      color: var(--color-muted);
-      margin-top: -0.75rem;
-      margin-bottom: var(--space-md);
-    }
-
-    .lookup__label {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-gold-dim);
-      margin-bottom: 0.5rem;
-    }
-
     .lookup__btn {
-      width: 100%;
       background: var(--color-gold);
       color: var(--color-navy);
       border: none;
-      padding: 1rem;
+      padding: 0.8rem 2rem;
       font-family: var(--font-body);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.25s ease;
       border-radius: 0;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .lookup__btn:hover {
@@ -140,23 +164,49 @@
 
     .lookup__spinner {
       display: none;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border: 2px solid var(--color-navy);
       border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
-      margin: 0 auto;
     }
 
     .lookup__btn--loading .lookup__spinner {
       display: inline-block;
       vertical-align: middle;
-      margin-right: 0.5rem;
+      margin-right: 0.4rem;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    .lookup__note {
+      font-size: 0.72rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .lookup__note-link {
+      color: var(--color-gold);
+      text-decoration: none;
+    }
+
+    /* ── GOLD DIVIDER ────────────────────────────────────────── */
+    .tracker__divider {
+      display: none;
+      width: 100%;
+      max-width: 1000px;
+      border: none;
+      border-top: 1px solid rgba(201, 168, 76, 0.2);
+      margin: 0 auto 2.5rem;
+    }
+
+    .tracker__divider--visible {
+      display: block;
     }
 
     /* ── ERROR STATE ──────────────────────────────────────────── */
@@ -165,7 +215,9 @@
       background: rgba(231, 76, 60, 0.06);
       border: 1px solid rgba(231, 76, 60, 0.2);
       padding: 2rem 2.5rem;
-      margin-bottom: 2rem;
+      max-width: 700px;
+      width: 100%;
+      text-align: left;
     }
 
     .tracker__error--visible {
@@ -191,130 +243,97 @@
       text-decoration: none;
     }
 
-    /* ── PIPELINE ─────────────────────────────────────────────── */
-    .pipeline {
+    /* ── RESULTS WRAPPER (two-column) ────────────────────────── */
+    .tracker__results {
       display: none;
-      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 1.5rem 4rem;
     }
 
-    .pipeline--visible {
-      display: block;
+    .tracker__results--visible {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 2.5rem;
     }
 
-    .pipeline__heading {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-gold-dim);
-      margin-bottom: var(--space-md);
-    }
-
-    .pipeline__step {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.25rem;
-      position: relative;
-    }
-
-    .pipeline__indicator {
+    /* ── LEFT COLUMN ─────────────────────────────────────────── */
+    .tracker__left {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      flex-shrink: 0;
-      width: 28px;
+      gap: 1.5rem;
     }
 
-    .pipeline__dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      flex-shrink: 0;
+    /* Claim Header */
+    .claim-header {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border-dim);
+    }
+
+    .claim-header__number {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .claim-header__vehicle {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--color-cream);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .claim-header__badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
       border: 1px solid var(--color-border);
       color: var(--color-muted);
-      background: var(--color-navy);
+      background: rgba(255, 255, 255, 0.03);
     }
 
-    .pipeline__dot--done {
-      border-color: var(--color-success);
-      background: rgba(111, 200, 111, 0.1);
-      color: var(--color-success);
-    }
-
-    .pipeline__dot--active {
+    .claim-header__badge--active {
       border-color: var(--color-teal);
-      background: rgba(45, 212, 191, 0.1);
       color: var(--color-teal);
-      box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
+      background: rgba(45, 212, 191, 0.06);
     }
 
-    .pipeline__line {
-      width: 1px;
-      height: 28px;
-      background: var(--color-border);
-      margin: 4px 0;
+    .claim-header__badge--complete {
+      border-color: var(--color-success);
+      color: var(--color-success);
+      background: rgba(111, 200, 111, 0.06);
     }
 
-    .pipeline__line--done {
-      background: var(--color-success);
-    }
-
-    .pipeline__body {
-      padding: 0.3rem 0 1.5rem;
-      min-height: 56px;
-    }
-
-    .pipeline__step:last-child .pipeline__body {
-      padding-bottom: 0;
-    }
-
-    .pipeline__step-title {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--color-cream);
-      margin-bottom: 0.15rem;
-    }
-
-    .pipeline__step--pending .pipeline__step-title {
-      color: var(--color-muted);
-    }
-
-    .pipeline__step-sub {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--color-muted);
-    }
-
-    /* ── DETAILS PANEL ────────────────────────────────────────── */
+    /* Details Panel */
     .details {
-      display: none;
       background: var(--color-navy-light);
       border: 1px solid var(--color-border);
-      padding: 2rem 2.5rem;
-    }
-
-    .details--visible {
-      display: block;
+      padding: 1.75rem 2rem;
     }
 
     .details__heading {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--color-gold-dim);
-      margin-bottom: var(--space-md);
+      margin-bottom: 1rem;
     }
 
     .details__row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.6rem 0;
+      padding: 0.55rem 0;
       border-bottom: 1px solid var(--color-border-dim);
     }
 
@@ -324,56 +343,52 @@
 
     .details__label {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--color-muted);
     }
 
     .details__value {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--color-cream);
       font-weight: 400;
       text-align: right;
     }
 
-    /* ── BACK LINK ────────────────────────────────────────────── */
-    .tracker__back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      color: var(--color-gold);
-      text-decoration: none;
-      margin-bottom: 2.5rem;
-      transition: color 0.25s ease;
+    /* Public Notes */
+    .notes {
+      display: none;
     }
 
-    .tracker__back:hover {
-      color: var(--color-gold-light);
+    .notes--visible {
+      display: block;
     }
 
-    /* ── 48HR NOTE ────────────────────────────────────────────── */
-    .lookup__note {
-      font-size: 0.72rem;
-      color: var(--color-muted);
-      line-height: 1.6;
-      margin-top: -0.75rem;
-      margin-bottom: 2rem;
+    .notes__heading {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: 0.75rem;
     }
 
-    .lookup__note-link {
-      color: var(--color-gold);
-      text-decoration: none;
+    .notes__body {
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--color-cream);
+      line-height: 1.7;
     }
 
-    /* ── FILE COMPLETE CTA ────────────────────────────────────── */
+    /* File Complete CTA */
     .pipeline__cta {
       display: none;
       border: 1px solid rgba(45, 212, 191, 0.3);
       background: rgba(45, 212, 191, 0.04);
-      padding: 1.25rem 2rem;
-      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
       font-size: 0.85rem;
       color: var(--color-cream-dim);
       line-height: 1.6;
@@ -388,32 +403,128 @@
       text-decoration: none;
     }
 
-    /* ── PUBLIC NOTES ─────────────────────────────────────────── */
-    .notes {
-      display: none;
-      margin-top: 2rem;
+    /* ── RIGHT COLUMN — PIPELINE ─────────────────────────────── */
+    .tracker__right {
+      display: flex;
+      flex-direction: column;
     }
 
-    .notes--visible {
-      display: block;
-    }
-
-    .notes__heading {
+    .pipeline__heading {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--color-gold-dim);
-      margin-bottom: var(--space-md);
+      margin-bottom: 1.5rem;
     }
 
-    .notes__body {
-      background: var(--color-navy-light);
+    .pipeline__step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      position: relative;
+    }
+
+    .pipeline__indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 40px;
+    }
+
+    .pipeline__dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
       border: 1px solid var(--color-border);
-      padding: 1.5rem 2rem;
-      font-size: 0.88rem;
+      color: var(--color-muted);
+      background: var(--color-navy);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .pipeline__dot--done {
+      border-color: var(--color-success);
+      background: rgba(111, 200, 111, 0.1);
+      color: var(--color-success);
+    }
+
+    .pipeline__dot--active {
+      border-color: var(--color-teal);
+      background: rgba(45, 212, 191, 0.08);
+      color: var(--color-teal);
+      box-shadow: 0 0 16px rgba(45, 212, 191, 0.3), 0 0 32px rgba(45, 212, 191, 0.1);
+    }
+
+    .pipeline__line {
+      width: 1px;
+      height: 24px;
+      background: var(--color-border);
+      margin: 4px 0;
+    }
+
+    .pipeline__line--done {
+      background: var(--color-success);
+    }
+
+    .pipeline__body {
+      padding: 0.5rem 0 1.75rem;
+    }
+
+    .pipeline__step:last-child .pipeline__body {
+      padding-bottom: 0;
+    }
+
+    .pipeline__step-title {
+      font-size: 1rem;
+      font-weight: 400;
       color: var(--color-cream);
-      line-height: 1.7;
+      margin-bottom: 0.2rem;
+    }
+
+    .pipeline__step--pending .pipeline__step-title {
+      color: var(--color-muted);
+    }
+
+    .pipeline__step-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-muted);
+    }
+
+    /* ── MOBILE ───────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .tracker__hero {
+        padding: 6rem 1.25rem 2rem;
+      }
+
+      .lookup {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .lookup__btn {
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .tracker__results--visible {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .tracker__results {
+        padding: 0 1.25rem 3rem;
+      }
+
+      .tracker__right {
+        order: -1;
+      }
     }
   </style>
 </head>
@@ -434,72 +545,85 @@
   </nav>
 
   <main class="tracker">
-    <div class="tracker__inner">
 
-      <a href="index.html" class="tracker__back">&larr; Back to Home</a>
+    <!-- ── HERO / LOOKUP ─────────────────────────────────────── -->
+    <div class="tracker__hero">
+      <div class="tracker__hero-inner">
+        <a href="index.html" class="tracker__back">&larr; Back to Home</a>
 
-      <p class="tracker__eyebrow">Claim Cipher™ Portal</p>
-      <h1 class="tracker__title">Track your <em>claim.</em></h1>
-      <p class="tracker__sub">
-        Enter your claim number and the last 6 digits of the vehicle's
-        VIN to look up the real-time status of your inspection.
-      </p>
+        <p class="tracker__eyebrow">Claim Cipher™ Portal</p>
+        <h1 class="tracker__title">Track your <em>claim.</em></h1>
+        <p class="tracker__sub">
+          Enter your claim number and the last 6 digits of the vehicle's
+          VIN to look up the real-time status of your inspection.
+        </p>
 
-      <!-- Lookup Form -->
-      <div class="lookup">
-        <label class="lookup__label" for="claimNum">Claim Number</label>
-        <input class="lookup__input" id="claimNum" type="text" placeholder="FH-2026-0000"/>
+        <div class="lookup">
+          <div class="lookup__field">
+            <label class="lookup__label" for="claimNum">Claim Number</label>
+            <input class="lookup__input" id="claimNum" type="text" placeholder="FH-2026-0000"/>
+          </div>
+          <div class="lookup__field">
+            <label class="lookup__label" for="vinLast6">Last 6 of VIN</label>
+            <input class="lookup__input lookup__input--vin" id="vinLast6" type="text" maxlength="6" placeholder="A1B2C3"/>
+          </div>
+          <button class="lookup__btn" id="lookupBtn" type="button">
+            <span class="lookup__spinner"></span>
+            <span id="lookupBtnText">Check Status</span>
+          </button>
+        </div>
 
-        <label class="lookup__label" for="vinLast6">Last 6 of VIN</label>
-        <input class="lookup__input lookup__input--vin" id="vinLast6" type="text" maxlength="6" placeholder="A1B2C3"/>
-        <p class="lookup__hint">Found on the vehicle registration or insurance declaration page.</p>
-
-        <button class="lookup__btn" id="lookupBtn" type="button">
-          <span class="lookup__spinner"></span>
-          <span id="lookupBtnText">Check Claim Status</span>
-        </button>
-      </div>
-
-      <p class="lookup__note">
-        Target inspection window: 48 hours from assignment.
-        Questions? Contact <a href="mailto:admin@flav8r.net" class="lookup__note-link">admin@flav8r.net</a>
-      </p>
-
-      <!-- Error State -->
-      <div class="tracker__error" id="errorBlock">
-        <div class="tracker__error-heading">Claim Not Found</div>
-        <p class="tracker__error-msg">
-          No claim found matching that number and VIN. Please check your
-          claim number and try again. If you need assistance contact
-          <a href="mailto:admin@flav8r.net" class="tracker__error-link">admin@flav8r.net</a>
+        <p class="lookup__note">
+          Target inspection window: 48 hours from assignment.
+          Questions? Contact <a href="mailto:admin@flav8r.net" class="lookup__note-link">admin@flav8r.net</a>
         </p>
       </div>
+    </div>
 
-      <!-- Pipeline -->
-      <div class="pipeline" id="pipeline">
+    <!-- Error State -->
+    <div class="tracker__error" id="errorBlock">
+      <div class="tracker__error-heading">Claim Not Found</div>
+      <p class="tracker__error-msg">
+        No claim found matching that number and VIN. Please check your
+        claim number and try again. If you need assistance contact
+        <a href="mailto:admin@flav8r.net" class="tracker__error-link">admin@flav8r.net</a>
+      </p>
+    </div>
+
+    <!-- Gold Divider -->
+    <hr class="tracker__divider" id="divider"/>
+
+    <!-- ── RESULTS (two-column) ──────────────────────────────── -->
+    <div class="tracker__results" id="results">
+
+      <!-- Left Column -->
+      <div class="tracker__left">
+        <div class="claim-header" id="claimHeader"></div>
+
+        <div class="details" id="details">
+          <div class="details__heading">Claim Details</div>
+          <div id="detailsRows"></div>
+        </div>
+
+        <div class="notes" id="notesBlock">
+          <div class="notes__heading">Notes from Flavor Holdings</div>
+          <div class="notes__body" id="notesBody"></div>
+        </div>
+
+        <div class="pipeline__cta" id="pipelineCta">
+          Your file is complete. Contact us to receive your deliverables:
+          <a href="mailto:admin@flav8r.net" class="pipeline__cta-link">admin@flav8r.net</a>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="tracker__right">
         <div class="pipeline__heading">Inspection Progress</div>
         <div id="pipelineSteps"></div>
       </div>
 
-      <!-- File Complete CTA -->
-      <div class="pipeline__cta" id="pipelineCta">
-        Your file is complete. Contact us to receive your deliverables:
-        <a href="mailto:admin@flav8r.net" class="pipeline__cta-link">admin@flav8r.net</a>
-      </div>
-
-      <!-- Details Panel -->
-      <div class="details" id="details">
-        <div class="details__heading">Claim Details</div>
-        <div id="detailsRows"></div>
-      </div>
-
-      <!-- Public Notes -->
-      <div class="notes" id="notesBlock">
-        <div class="notes__heading">Notes from Flavor Holdings</div>
-        <div class="notes__body" id="notesBody"></div>
-      </div>
-
     </div>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -512,23 +636,25 @@
 
     var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-    var lookupBtn   = document.getElementById('lookupBtn');
-    var btnText     = document.getElementById('lookupBtnText');
-    var claimInput  = document.getElementById('claimNum');
-    var vinInput    = document.getElementById('vinLast6');
-    var errorBlock  = document.getElementById('errorBlock');
-    var pipelineEl  = document.getElementById('pipeline');
-    var stepsEl     = document.getElementById('pipelineSteps');
-    var detailsEl   = document.getElementById('details');
-    var detailsRows = document.getElementById('detailsRows');
-    var pipelineCta = document.getElementById('pipelineCta');
-    var notesBlock  = document.getElementById('notesBlock');
-    var notesBody   = document.getElementById('notesBody');
+    var lookupBtn    = document.getElementById('lookupBtn');
+    var btnText      = document.getElementById('lookupBtnText');
+    var claimInput   = document.getElementById('claimNum');
+    var vinInput     = document.getElementById('vinLast6');
+    var errorBlock   = document.getElementById('errorBlock');
+    var divider      = document.getElementById('divider');
+    var resultsEl    = document.getElementById('results');
+    var claimHeader  = document.getElementById('claimHeader');
+    var stepsEl      = document.getElementById('pipelineSteps');
+    var detailsEl    = document.getElementById('details');
+    var detailsRows  = document.getElementById('detailsRows');
+    var pipelineCta  = document.getElementById('pipelineCta');
+    var notesBlock   = document.getElementById('notesBlock');
+    var notesBody    = document.getElementById('notesBody');
 
     function hideAll() {
       errorBlock.classList.remove('tracker__error--visible');
-      pipelineEl.classList.remove('pipeline--visible');
-      detailsEl.classList.remove('details--visible');
+      divider.classList.remove('tracker__divider--visible');
+      resultsEl.classList.remove('tracker__results--visible');
       pipelineCta.classList.remove('pipeline__cta--visible');
       notesBlock.classList.remove('notes--visible');
     }
@@ -540,7 +666,7 @@
         btnText.textContent = 'Searching\u2026';
       } else {
         lookupBtn.classList.remove('lookup__btn--loading');
-        btnText.textContent = 'Check Claim Status';
+        btnText.textContent = 'Check Status';
       }
     }
 
@@ -552,6 +678,24 @@
       }) + ' ' + dt.toLocaleTimeString('en-US', {
         hour: 'numeric', minute: '2-digit'
       });
+    }
+
+    function buildClaimHeader(d) {
+      var status = (d.status || '').toUpperCase();
+      var badgeClass = 'claim-header__badge';
+      var badgeLabel = status.replace(/_/g, ' ') || 'PENDING';
+
+      if (status === 'COMPLETED') {
+        badgeClass += ' claim-header__badge--complete';
+      } else if (status === 'IN_PROGRESS' || status === 'ASSIGNED') {
+        badgeClass += ' claim-header__badge--active';
+      }
+
+      var html = '';
+      html += '<div class="claim-header__number">' + (d.claim_number || '\u2014') + '</div>';
+      html += '<div class="claim-header__vehicle">' + (d.vehicle || 'Vehicle') + '</div>';
+      html += '<span class="' + badgeClass + '">' + badgeLabel + '</span>';
+      claimHeader.innerHTML = html;
     }
 
     function buildPipeline(d) {
@@ -573,7 +717,6 @@
         { title: 'File Complete',          done: fileComplete,   sub: d.completion_date ? fmtDate(d.completion_date) : 'Pending completion' }
       ];
 
-      // Find the furthest done index to mark "active" (first not-done)
       var activeIdx = -1;
       for (var i = 0; i < steps.length; i++) {
         if (!steps[i].done) { activeIdx = i; break; }
@@ -587,7 +730,7 @@
         var stateClass = isDone ? '' : (isActive ? '' : 'pipeline__step--pending');
 
         var dotClass = 'pipeline__dot';
-        var dotChar  = '\u25CB'; // ○
+        var dotChar  = '\u25CB';
         if (isDone)        { dotClass += ' pipeline__dot--done';   dotChar = '\u2713'; }
         else if (isActive) { dotClass += ' pipeline__dot--active'; dotChar = '\u25CE'; }
 
@@ -613,8 +756,6 @@
 
     function buildDetails(d) {
       var rows = [
-        ['Claim Number', d.claim_number || '\u2014'],
-        ['Vehicle',      d.vehicle || '\u2014'],
         ['Firm',         d.firm || '\u2014'],
         ['Inspector',    d.inspector_name || '\u2014'],
         ['Appointment',  fmtDate(d.appointment)],
@@ -655,10 +796,12 @@
           return;
         }
 
+        buildClaimHeader(data);
         buildPipeline(data);
         buildDetails(data);
-        pipelineEl.classList.add('pipeline--visible');
-        detailsEl.classList.add('details--visible');
+
+        divider.classList.add('tracker__divider--visible');
+        resultsEl.classList.add('tracker__results--visible');
 
         // File complete CTA
         var st = (data.status || '').toUpperCase();
