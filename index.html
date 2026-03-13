@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Flavor Holdings LLC provides fully managed auto damage inspection services powered by Claim Cipher dispatch technology. Serving carriers, TPAs, and self-insured entities across the US."/>
   <title>Flavor Holdings LLC — Auto Damage Appraisal Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -18,18 +19,25 @@
     </div>
     <ul class="nav__links">
       <li><a href="#services"   class="nav__link">Services</a></li>
+      <li><a href="#coverage"   class="nav__link">Coverage</a></li>
       <li><a href="#cipher"     class="nav__link">Claim Cipher™</a></li>
       <li><a href="#track"      class="nav__link">Track Claim</a></li>
       <li><a href="#inspectors" class="nav__link">Join Our Network</a></li>
       <li><a href="#carriers"   class="nav__link">For Carriers</a></li>
     </ul>
+    <button class="nav__hamburger" id="navHamburger"
+            aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__hamburger-bar"></span>
+      <span class="nav__hamburger-bar"></span>
+      <span class="nav__hamburger-bar"></span>
+    </button>
     <a href="#carriers" class="nav__cta">Assign Claims</a>
   </nav>
 
   <!-- ══ HERO ══════════════════════════════════════════════════ -->
   <section class="hero">
-    <div class="hero__bg-line"></div>
-    <div class="hero__bg-glow"></div>
+    <div class="hero__bg-line" aria-hidden="true"></div>
+    <div class="hero__bg-glow" aria-hidden="true"></div>
 
     <p class="hero__eyebrow">Independent Auto Damage Appraisal</p>
 
@@ -91,28 +99,28 @@
 
         <div class="intro__bullets reveal reveal--d2">
           <div class="intro__bullet">
-            <div class="intro__bullet-icon">✦</div>
+            <div class="intro__bullet-icon" aria-hidden="true">✦</div>
             <div>
               <div class="intro__bullet-title">Licensed &amp; Compliant</div>
               <div class="intro__bullet-desc">Active adjuster license maintained. All work performed to TPA and carrier standards.</div>
             </div>
           </div>
           <div class="intro__bullet">
-            <div class="intro__bullet-icon">⟳</div>
+            <div class="intro__bullet-icon" aria-hidden="true">⟳</div>
             <div>
               <div class="intro__bullet-title">Dispatch-Managed Network</div>
               <div class="intro__bullet-desc">Claims are assigned through Claim Cipher™'s dispatch system — no dropped balls, no delays.</div>
             </div>
           </div>
           <div class="intro__bullet">
-            <div class="intro__bullet-icon">◎</div>
+            <div class="intro__bullet-icon" aria-hidden="true">◎</div>
             <div>
               <div class="intro__bullet-title">Real-Time Visibility</div>
               <div class="intro__bullet-desc">Carriers and adjusters track inspection progress live — photos, status, ETA, and delivery in one view.</div>
             </div>
           </div>
           <div class="intro__bullet">
-            <div class="intro__bullet-icon">→</div>
+            <div class="intro__bullet-icon" aria-hidden="true">→</div>
             <div>
               <div class="intro__bullet-title">Expanding Markets</div>
               <div class="intro__bullet-desc">Actively building coverage in high-demand markets. If you need a market covered, reach out.</div>
@@ -176,6 +184,99 @@
     </div>
   </section>
 
+  <!-- ══ COVERAGE ═════════════════════════════════════════════ -->
+  <section class="coverage" id="coverage">
+    <div class="section-inner">
+      <div class="coverage__header">
+        <p class="section-tag">Coverage</p>
+        <h2>We're <em>growing.</em></h2>
+        <p class="coverage__sub">
+          Flavor Holdings is actively expanding its inspector network
+          across the US. Active markets are operational today. Launching
+          markets are in build-out. Don't see your region? Request
+          coverage — your assignment volume is what opens the next market.
+        </p>
+      </div>
+
+      <div class="coverage__map-wrap">
+        <div class="coverage__map" id="coverageMap">
+
+          <svg viewBox="0 0 960 600" class="coverage__svg" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="1.5" aria-hidden="true">
+            <path d="M 120,100 L 108,95 100,100 92,115 88,135 82,165 76,200 72,230 68,255 72,280 80,305 90,330 100,348 112,358 130,362 155,366 180,370 205,374 230,378 255,385 270,395 282,408 295,425 310,445 325,462 338,478 345,470 352,455 362,440 378,428 398,422 420,425 445,430 468,432 490,428 510,422 528,418 542,420 558,430 572,445 585,462 598,478 606,490 612,475 618,450 620,425 622,400 625,380 632,362 645,345 662,330 682,318 705,308 728,295 748,278 765,265 780,255 792,245 802,238 812,230 820,220 828,208 832,195 835,180 832,170 825,168 818,172 808,175 800,170 792,158 785,150 778,145 768,148 758,155 748,152 738,145 728,148 718,155 708,158 698,152 688,148 678,150 668,155 658,162 648,170 638,175 628,168 618,158 608,152 598,150 588,155 578,162 568,158 558,150 548,145 538,140 528,138 518,140 508,138 498,135 488,130 478,126 468,122 456,120 442,118 428,115 415,112 402,108 388,105 375,102 362,100 348,98 335,100 322,98 308,96 295,94 282,96 270,98 258,100 245,98 232,96 220,94 208,96 196,98 184,100 172,98 160,96 148,95 136,98 Z"/>
+          </svg>
+
+          <!-- ACTIVE — gold pulse -->
+          <div class="coverage__circle coverage__circle--active"
+               data-region="South Central Texas"
+               data-left="33" data-top="74"></div>
+          <div class="coverage__circle coverage__circle--active"
+               data-region="West Texas"
+               data-left="24" data-top="68"></div>
+          <div class="coverage__circle coverage__circle--active"
+               data-region="Mountain West"
+               data-left="20" data-top="52"></div>
+
+          <!-- LAUNCHING — teal slower pulse -->
+          <div class="coverage__circle coverage__circle--launching"
+               data-region="Launching Soon"
+               data-left="29" data-top="58"></div>
+          <div class="coverage__circle coverage__circle--launching"
+               data-region="Launching Soon"
+               data-left="16" data-top="44"></div>
+
+          <!-- OPEN — faint dashed, clickable, scroll to contact -->
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Pacific Coast"
+               data-left="7" data-top="42"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Pacific Northwest"
+               data-left="10" data-top="28"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Upper Midwest"
+               data-left="50" data-top="30"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Great Lakes"
+               data-left="62" data-top="32"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Mid-Atlantic"
+               data-left="78" data-top="40"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Southeast"
+               data-left="68" data-top="66"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Florida"
+               data-left="72" data-top="80"></div>
+          <div class="coverage__circle coverage__circle--open"
+               data-region="Northeast"
+               data-left="84" data-top="28"></div>
+
+          <!-- TOOLTIP -->
+          <div class="coverage__tooltip" id="coverageTooltip" aria-live="polite">
+            <span class="coverage__tooltip-region" id="tooltipRegion"></span>
+            <a href="#carriers" class="coverage__tooltip-cta coverage__tooltip-cta--hidden"
+               id="tooltipCta">Request Coverage</a>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="coverage__legend">
+        <div class="coverage__legend-item">
+          <div class="coverage__legend-dot coverage__legend-dot--active"></div>
+          <span class="coverage__legend-label">Active</span>
+        </div>
+        <div class="coverage__legend-item">
+          <div class="coverage__legend-dot coverage__legend-dot--launching"></div>
+          <span class="coverage__legend-label">Launching</span>
+        </div>
+        <div class="coverage__legend-item">
+          <div class="coverage__legend-dot coverage__legend-dot--open"></div>
+          <span class="coverage__legend-label">Request Coverage</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ CIPHER ════════════════════════════════════════════════ -->
   <section class="cipher" id="cipher">
     <div class="section-inner">
@@ -218,9 +319,9 @@
         <!-- Mock Dashboard -->
         <div class="dashboard reveal reveal--d2">
           <div class="dashboard__topbar">
-            <div class="dashboard__dot dashboard__dot--red"></div>
-            <div class="dashboard__dot dashboard__dot--yellow"></div>
-            <div class="dashboard__dot dashboard__dot--green"></div>
+            <div class="dashboard__dot dashboard__dot--red" aria-hidden="true"></div>
+            <div class="dashboard__dot dashboard__dot--yellow" aria-hidden="true"></div>
+            <div class="dashboard__dot dashboard__dot--green" aria-hidden="true"></div>
             <span class="dashboard__window-title">CLAIM CIPHER HQ — DISPATCH VIEW</span>
           </div>
           <div class="dashboard__body">
@@ -384,22 +485,23 @@
             <option value="other">Other field inspection work</option>
           </select>
 
-          <label class="form__label" for="vehicle">Vehicle Year / Make / Model</label>
-          <input class="form__input" id="vehicle" type="text" placeholder="2022 Toyota Camry"/>
+          <label class="form__label" for="vehicle">Your Vehicle Year / Make / Model</label>
+          <input class="form__input" id="vehicle" type="text" placeholder="2019 Honda Civic"/>
 
           <label class="form__label">Days Available</label>
           <div class="form__checkboxes">
-            <label class="form__checkbox"><input type="checkbox" value="Mon"/><span>Mon</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Tue"/><span>Tue</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Wed"/><span>Wed</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Thu"/><span>Thu</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Fri"/><span>Fri</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Sat"/><span>Sat</span></label>
-            <label class="form__checkbox"><input type="checkbox" value="Sun"/><span>Sun</span></label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Mon"/>Mon</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Tue"/>Tue</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Wed"/>Wed</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Thu"/>Thu</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Fri"/>Fri</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Sat"/>Sat</label>
+            <label class="form__checkbox-label"><input class="form__checkbox-input" type="checkbox" value="Sun"/>Sun</label>
           </div>
 
-          <label class="form__label" for="about">Tell Us About Yourself</label>
-          <textarea class="form__textarea" id="about" placeholder="A little about your background, availability, and why you're interested..."></textarea>
+          <label class="form__label" for="bio">About You</label>
+          <textarea class="form__textarea" id="bio"
+            placeholder="Tell us a little about yourself and why you'd like to join the network."></textarea>
 
           <button class="form__submit" id="inspectorSubmit" type="button">
             Submit Application
@@ -488,25 +590,34 @@
         </div>
 
         <div class="footer__col">
-          <div class="footer__col-heading">Resources</div>
-          <ul class="footer__links">
-            <li><a href="#" class="footer__link">Coverage Markets</a></li>
-            <li><a href="#" class="footer__link">Inspector FAQ</a></li>
-            <li><a href="#" class="footer__link">TPA Setup</a></li>
-            <li><a href="#" class="footer__link">Claim Cipher™</a></li>
-          </ul>
+          <div class="footer__col-heading">Coverage</div>
+          <div class="footer__map">
+            <div class="footer__map-inner" id="footerMap">
+              <svg viewBox="0 0 960 600" class="footer__map-svg" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="1.5" aria-hidden="true">
+                <path d="M 120,100 L 108,95 100,100 92,115 88,135 82,165 76,200 72,230 68,255 72,280 80,305 90,330 100,348 112,358 130,362 155,366 180,370 205,374 230,378 255,385 270,395 282,408 295,425 310,445 325,462 338,478 345,470 352,455 362,440 378,428 398,422 420,425 445,430 468,432 490,428 510,422 528,418 542,420 558,430 572,445 585,462 598,478 606,490 612,475 618,450 620,425 622,400 625,380 632,362 645,345 662,330 682,318 705,308 728,295 748,278 765,265 780,255 792,245 802,238 812,230 820,220 828,208 832,195 835,180 832,170 825,168 818,172 808,175 800,170 792,158 785,150 778,145 768,148 758,155 748,152 738,145 728,148 718,155 708,158 698,152 688,148 678,150 668,155 658,162 648,170 638,175 628,168 618,158 608,152 598,150 588,155 578,162 568,158 558,150 548,145 538,140 528,138 518,140 508,138 498,135 488,130 478,126 468,122 456,120 442,118 428,115 415,112 402,108 388,105 375,102 362,100 348,98 335,100 322,98 308,96 295,94 282,96 270,98 258,100 245,98 232,96 220,94 208,96 196,98 184,100 172,98 160,96 148,95 136,98 Z"/>
+              </svg>
+              <div class="footer__map-circle footer__map-circle--active"
+                   data-left="33" data-top="74"></div>
+              <div class="footer__map-circle footer__map-circle--active"
+                   data-left="24" data-top="68"></div>
+              <div class="footer__map-circle footer__map-circle--active"
+                   data-left="20" data-top="52"></div>
+              <div class="footer__map-circle footer__map-circle--launching"
+                   data-left="29" data-top="58"></div>
+              <div class="footer__map-circle footer__map-circle--launching"
+                   data-left="16" data-top="44"></div>
+            </div>
+          </div>
+          <p class="footer__map-note">Active and expanding markets across the US.</p>
         </div>
 
         <div class="footer__col">
           <div class="footer__col-heading">Contact</div>
           <p class="footer__contact-text">
-            General Inquiries<br/>
+            All Inquiries<br/>
             <a href="mailto:admin@flav8r.net" class="footer__contact-link">admin@flav8r.net</a>
             <br/><br/>
-            Claim Assignments<br/>
-            <a href="mailto:admin@flav8r.net" class="footer__contact-link">admin@flav8r.net</a>
-            <br/><br/>
-            Inspector Network<br/>
+            Inspector Applications<br/>
             <a href="mailto:inspects@flav8r.net" class="footer__contact-link">inspects@flav8r.net</a>
           </p>
         </div>
