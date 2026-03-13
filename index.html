@@ -201,57 +201,59 @@
       <div class="coverage__map-wrap">
         <div class="coverage__map" id="coverageMap">
 
-          <svg viewBox="0 0 1000 620" class="coverage__svg" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1.5" aria-hidden="true">
-            <path d="M 165,565 L 160,555 155,540 148,520 140,500 138,485 142,470 150,458 162,448 178,440 195,432 210,425 225,418 240,410 248,398 252,385 250,370 245,358 235,348 228,335 225,322 228,308 235,295 240,280 238,265 230,252 218,242 205,235 195,228 188,218 182,205 178,192 175,178 172,165 168,152 162,140 155,130 148,122 140,118 132,120 125,128 118,138 110,145 102,148 95,142 92,132 95,120 102,108 112,98 125,90 140,85 155,82 170,80 185,78 200,76 218,75 235,76 255,78 275,80 295,78 315,76 335,74 355,72 375,70 395,68 415,67 435,68 455,70 475,72 495,74 515,72 535,70 555,68 575,66 595,65 615,66 635,68 655,70 675,72 695,75 715,78 728,82 738,88 745,95 750,105 758,112 768,118 778,122 790,118 798,110 805,100 815,92 828,88 842,90 855,95 865,102 872,112 878,125 882,140 888,155 895,165 905,172 912,180 915,190 912,202 905,215 895,225 885,232 878,242 872,255 868,268 865,282 862,298 858,312 855,328 848,340 838,348 830,355 825,368 822,382 818,395 812,408 802,418 790,425 780,435 775,448 772,462 768,475 762,488 752,498 740,505 728,510 715,515 702,520 688,528 675,535 665,542 658,552 652,562 648,575 645,585 640,592 632,595 622,590 615,582 608,572 600,565 590,560 578,558 565,560 552,565 L 538,568 525,565 512,560 498,558 485,560 475,565 468,572 462,580 458,588 452,595 442,598 430,595 418,588 405,582 392,578 378,575 365,572 352,570 338,568 325,565 312,562 298,558 285,555 272,555 260,558 248,562 238,565 225,568 212,570 198,568 185,565 175,565 Z"/>
-          </svg>
+          <img
+            src="us.svg"
+            class="coverage__svg"
+            alt="United States coverage map"
+          />
 
           <!-- ACTIVE — gold pulse -->
           <div class="coverage__circle coverage__circle--active"
                data-region="North Carolina"
-               data-left="78" data-top="48"></div>
+               data-left="80" data-top="52"></div>
           <div class="coverage__circle coverage__circle--active"
                data-region="South Central Texas"
-               data-left="38" data-top="72"></div>
+               data-left="42" data-top="74"></div>
           <div class="coverage__circle coverage__circle--active"
                data-region="West Texas"
-               data-left="28" data-top="65"></div>
+               data-left="34" data-top="68"></div>
           <div class="coverage__circle coverage__circle--active"
                data-region="Mountain West"
-               data-left="25" data-top="58"></div>
+               data-left="28" data-top="60"></div>
 
           <!-- LAUNCHING — teal slower pulse -->
           <div class="coverage__circle coverage__circle--launching"
                data-region="Launching Soon"
-               data-left="15" data-top="48"></div>
+               data-left="18" data-top="50"></div>
           <div class="coverage__circle coverage__circle--launching"
                data-region="Launching Soon"
-               data-left="32" data-top="62"></div>
+               data-left="38" data-top="66"></div>
 
           <!-- OPEN — faint dashed, clickable, scroll to contact -->
           <div class="coverage__circle coverage__circle--open"
                data-region="Pacific Coast"
-               data-left="8" data-top="45"></div>
+               data-left="12" data-top="48"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Pacific Northwest"
-               data-left="11" data-top="22"></div>
+               data-left="15" data-top="25"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Upper Midwest"
-               data-left="48" data-top="28"></div>
+               data-left="50" data-top="30"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Great Lakes"
-               data-left="63" data-top="30"></div>
+               data-left="64" data-top="33"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Mid-Atlantic"
-               data-left="80" data-top="38"></div>
+               data-left="82" data-top="42"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Southeast"
-               data-left="70" data-top="65"></div>
+               data-left="72" data-top="68"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Florida"
-               data-left="73" data-top="78"></div>
+               data-left="74" data-top="80"></div>
           <div class="coverage__circle coverage__circle--open"
                data-region="Northeast"
-               data-left="86" data-top="20"></div>
+               data-left="87" data-top="22"></div>
 
           <!-- TOOLTIP -->
           <div class="coverage__tooltip" id="coverageTooltip" aria-live="polite">
@@ -596,21 +598,23 @@
           <div class="footer__col-heading">Coverage</div>
           <div class="footer__map">
             <div class="footer__map-inner" id="footerMap">
-              <svg viewBox="0 0 1000 620" class="footer__map-svg" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1.5" aria-hidden="true">
-                <path d="M 165,565 L 160,555 155,540 148,520 140,500 138,485 142,470 150,458 162,448 178,440 195,432 210,425 225,418 240,410 248,398 252,385 250,370 245,358 235,348 228,335 225,322 228,308 235,295 240,280 238,265 230,252 218,242 205,235 195,228 188,218 182,205 178,192 175,178 172,165 168,152 162,140 155,130 148,122 140,118 132,120 125,128 118,138 110,145 102,148 95,142 92,132 95,120 102,108 112,98 125,90 140,85 155,82 170,80 185,78 200,76 218,75 235,76 255,78 275,80 295,78 315,76 335,74 355,72 375,70 395,68 415,67 435,68 455,70 475,72 495,74 515,72 535,70 555,68 575,66 595,65 615,66 635,68 655,70 675,72 695,75 715,78 728,82 738,88 745,95 750,105 758,112 768,118 778,122 790,118 798,110 805,100 815,92 828,88 842,90 855,95 865,102 872,112 878,125 882,140 888,155 895,165 905,172 912,180 915,190 912,202 905,215 895,225 885,232 878,242 872,255 868,268 865,282 862,298 858,312 855,328 848,340 838,348 830,355 825,368 822,382 818,395 812,408 802,418 790,425 780,435 775,448 772,462 768,475 762,488 752,498 740,505 728,510 715,515 702,520 688,528 675,535 665,542 658,552 652,562 648,575 645,585 640,592 632,595 622,590 615,582 608,572 600,565 590,560 578,558 565,560 552,565 L 538,568 525,565 512,560 498,558 485,560 475,565 468,572 462,580 458,588 452,595 442,598 430,595 418,588 405,582 392,578 378,575 365,572 352,570 338,568 325,565 312,562 298,558 285,555 272,555 260,558 248,562 238,565 225,568 212,570 198,568 185,565 175,565 Z"/>
-              </svg>
+              <img
+                src="us.svg"
+                class="footer__map-svg"
+                alt="United States coverage map"
+              />
               <div class="footer__map-circle footer__map-circle--active"
-                   data-left="78" data-top="48"></div>
+                   data-left="80" data-top="52"></div>
               <div class="footer__map-circle footer__map-circle--active"
-                   data-left="38" data-top="72"></div>
+                   data-left="42" data-top="74"></div>
               <div class="footer__map-circle footer__map-circle--active"
-                   data-left="28" data-top="65"></div>
+                   data-left="34" data-top="68"></div>
               <div class="footer__map-circle footer__map-circle--active"
-                   data-left="25" data-top="58"></div>
+                   data-left="28" data-top="60"></div>
               <div class="footer__map-circle footer__map-circle--launching"
-                   data-left="15" data-top="48"></div>
+                   data-left="18" data-top="50"></div>
               <div class="footer__map-circle footer__map-circle--launching"
-                   data-left="32" data-top="62"></div>
+                   data-left="38" data-top="66"></div>
             </div>
           </div>
           <p class="footer__map-note">Active and expanding markets across the US.</p>
