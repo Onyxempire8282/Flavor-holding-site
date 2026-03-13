@@ -352,6 +352,69 @@
     .tracker__back:hover {
       color: var(--color-gold-light);
     }
+
+    /* ── 48HR NOTE ────────────────────────────────────────────── */
+    .lookup__note {
+      font-size: 0.72rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-top: -0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .lookup__note-link {
+      color: var(--color-gold);
+      text-decoration: none;
+    }
+
+    /* ── FILE COMPLETE CTA ────────────────────────────────────── */
+    .pipeline__cta {
+      display: none;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      background: rgba(45, 212, 191, 0.04);
+      padding: 1.25rem 2rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--color-cream-dim);
+      line-height: 1.6;
+    }
+
+    .pipeline__cta--visible {
+      display: block;
+    }
+
+    .pipeline__cta-link {
+      color: var(--color-gold);
+      text-decoration: none;
+    }
+
+    /* ── PUBLIC NOTES ─────────────────────────────────────────── */
+    .notes {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .notes--visible {
+      display: block;
+    }
+
+    .notes__heading {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-md);
+    }
+
+    .notes__body {
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      padding: 1.5rem 2rem;
+      font-size: 0.88rem;
+      color: var(--color-cream);
+      line-height: 1.7;
+    }
   </style>
 </head>
 <body>
@@ -397,6 +460,11 @@
         </button>
       </div>
 
+      <p class="lookup__note">
+        Target inspection window: 48 hours from assignment.
+        Questions? Contact <a href="mailto:admin@flav8r.net" class="lookup__note-link">admin@flav8r.net</a>
+      </p>
+
       <!-- Error State -->
       <div class="tracker__error" id="errorBlock">
         <div class="tracker__error-heading">Claim Not Found</div>
@@ -413,10 +481,22 @@
         <div id="pipelineSteps"></div>
       </div>
 
+      <!-- File Complete CTA -->
+      <div class="pipeline__cta" id="pipelineCta">
+        Your file is complete. Contact us to receive your deliverables:
+        <a href="mailto:admin@flav8r.net" class="pipeline__cta-link">admin@flav8r.net</a>
+      </div>
+
       <!-- Details Panel -->
       <div class="details" id="details">
         <div class="details__heading">Claim Details</div>
         <div id="detailsRows"></div>
+      </div>
+
+      <!-- Public Notes -->
+      <div class="notes" id="notesBlock">
+        <div class="notes__heading">Notes from Flavor Holdings</div>
+        <div class="notes__body" id="notesBody"></div>
       </div>
 
     </div>
@@ -441,11 +521,16 @@
     var stepsEl     = document.getElementById('pipelineSteps');
     var detailsEl   = document.getElementById('details');
     var detailsRows = document.getElementById('detailsRows');
+    var pipelineCta = document.getElementById('pipelineCta');
+    var notesBlock  = document.getElementById('notesBlock');
+    var notesBody   = document.getElementById('notesBody');
 
     function hideAll() {
       errorBlock.classList.remove('tracker__error--visible');
       pipelineEl.classList.remove('pipeline--visible');
       detailsEl.classList.remove('details--visible');
+      pipelineCta.classList.remove('pipeline__cta--visible');
+      notesBlock.classList.remove('notes--visible');
     }
 
     function setLoading(on) {
@@ -530,7 +615,8 @@
         ['Firm',         d.firm || '\u2014'],
         ['Inspector',    d.inspector_name || '\u2014'],
         ['Appointment',  fmtDate(d.appointment)],
-        ['Photos on File', (d.photo_count != null ? d.photo_count : '\u2014')]
+        ['Photos on File', (d.photo_count != null ? d.photo_count : '\u2014')],
+        ['Last Updated',  fmtDate(d.created_at)]
       ];
 
       var html = '';
@@ -570,6 +656,18 @@
         buildDetails(data);
         pipelineEl.classList.add('pipeline--visible');
         detailsEl.classList.add('details--visible');
+
+        // File complete CTA
+        var st = (data.status || '').toUpperCase();
+        if (st === 'COMPLETED' && data.file_total > 0) {
+          pipelineCta.classList.add('pipeline__cta--visible');
+        }
+
+        // Public notes
+        if (data.public_notes && data.public_notes.trim()) {
+          notesBody.textContent = data.public_notes;
+          notesBlock.classList.add('notes--visible');
+        }
       } catch (e) {
         errorBlock.classList.add('tracker__error--visible');
       }
