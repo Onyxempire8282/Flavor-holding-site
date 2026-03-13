@@ -546,8 +546,11 @@
 
     function fmtDate(val) {
       if (!val) return '\u2014';
-      return new Date(val).toLocaleDateString('en-US', {
+      var dt = new Date(val);
+      return dt.toLocaleDateString('en-US', {
         year: 'numeric', month: 'short', day: 'numeric'
+      }) + ' ' + dt.toLocaleTimeString('en-US', {
+        hour: 'numeric', minute: '2-digit'
       });
     }
 
@@ -562,12 +565,12 @@
 
       var steps = [
         { title: 'Claim Received',        done: true,           sub: 'Received ' + fmtDate(d.created_at) },
-        { title: 'Inspector Assigned',     done: hasInspector,   sub: hasInspector ? d.inspector_name : '' },
-        { title: 'Inspection Scheduled',   done: hasAppointment, sub: hasAppointment ? fmtDate(d.appointment) : '' },
-        { title: 'Vehicle Inspected',      done: isInProgress,   sub: isInProgress ? 'Inspection complete' : '' },
+        { title: 'Inspector Assigned',     done: hasInspector,   sub: d.assigned_at ? fmtDate(d.assigned_at) : 'Pending assignment' },
+        { title: 'Inspection Scheduled',   done: hasAppointment, sub: hasAppointment ? fmtDate(d.appointment) : 'Pending scheduling' },
+        { title: 'Vehicle Inspected',      done: isInProgress,   sub: d.inspected_at ? fmtDate(d.inspected_at) : 'Pending inspection' },
         { title: 'Photos Uploaded',        done: hasPhotos,      sub: hasPhotos ? d.photo_count + ' photo(s) on file' : '' },
-        { title: 'Appraisal in Progress',  done: isCompleted,    sub: isCompleted ? 'Appraisal finalized' : '' },
-        { title: 'File Complete',          done: fileComplete,   sub: fileComplete ? 'Completed ' + fmtDate(d.completion_date) : '' }
+        { title: 'Appraisal in Progress',  done: isCompleted,    sub: d.appraisal_completed_at ? fmtDate(d.appraisal_completed_at) : 'Awaiting appraisal' },
+        { title: 'File Complete',          done: fileComplete,   sub: d.completion_date ? fmtDate(d.completion_date) : 'Pending completion' }
       ];
 
       // Find the furthest done index to mark "active" (first not-done)
