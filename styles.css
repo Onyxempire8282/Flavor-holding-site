@@ -136,6 +136,16 @@ h2 em {
   transform: translateY(-1px);
 }
 
+.btn--teal {
+  background: var(--color-teal);
+  color: var(--color-navy);
+}
+
+.btn--teal:hover {
+  background: #5de8d5;
+  transform: translateY(-1px);
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-cream);
@@ -696,6 +706,146 @@ h2 em {
   color: var(--color-muted);
 }
 
+/* ── BLOCK: TRACK ───────────────────────────────────────────── */
+.track {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-2xl) 0;
+}
+
+.track__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.track__content {
+  padding-right: 2rem;
+}
+
+.track__desc {
+  color: var(--color-cream-dim);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  margin-top: 1.5rem;
+}
+
+.track__form {
+  max-width: 480px;
+}
+
+.track__callout {
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-border);
+  padding: 3rem;
+}
+
+.track__callout-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: var(--space-md);
+}
+
+.track__callout-heading {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--color-cream);
+  margin-bottom: 1rem;
+}
+
+.track__callout-body {
+  font-size: 0.9rem;
+  color: var(--color-cream-dim);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.track__callout-note {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-top: var(--space-md);
+}
+
+.track__callout-note-link {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+.track__callout-note-link:hover {
+  color: var(--color-gold-light);
+}
+
+.track__callout-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.track__result {
+  display: none;
+  margin-top: var(--space-md);
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.track__result--loading {
+  display: block;
+  color: var(--color-cream-dim);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.track__result--found {
+  display: block;
+  background: rgba(45, 212, 191, 0.05);
+  border-color: rgba(45, 212, 191, 0.2);
+}
+
+.track__result--not-found {
+  display: block;
+  background: rgba(231, 76, 60, 0.06);
+  border-color: rgba(231, 76, 60, 0.2);
+  color: #e8a09a;
+}
+
+.track__result--sent {
+  display: block;
+  background: rgba(45, 212, 191, 0.05);
+  border-color: rgba(45, 212, 191, 0.2);
+  color: var(--color-teal);
+}
+
+.track__result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border-dim);
+}
+
+.track__result-row:last-child {
+  border-bottom: none;
+}
+
+.track__result-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.track__result-value {
+  color: var(--color-cream);
+  font-weight: 400;
+}
+
 /* ── BLOCK: INSPECTOR ───────────────────────────────────────── */
 .inspector {
   position: relative;
@@ -874,6 +1024,51 @@ h2 em {
 .form__submit--sent:hover {
   background: var(--color-teal);
   transform: none;
+}
+
+.form__submit--error {
+  background: var(--color-gold-dim);
+  color: var(--color-cream);
+}
+
+.form__submit--error:hover {
+  background: var(--color-gold-dim);
+  transform: none;
+}
+
+.form__checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: var(--space-md);
+}
+
+.form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--color-cream-dim);
+  cursor: pointer;
+}
+
+.form__checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+}
+
+.form__confirmation {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--color-teal);
+  line-height: 1.6;
+  margin-top: var(--space-md);
+}
+
+.form__confirmation--visible {
+  display: block;
 }
 
 /* ── BLOCK: PARTNERS ────────────────────────────────────────── */
@@ -1093,6 +1288,7 @@ h2 em {
 
   .intro__grid,
   .cipher__grid,
+  .track__grid,
   .inspector__grid,
   .partners__header,
   .footer__grid {
@@ -1119,6 +1315,10 @@ h2 em {
 
   .footer__grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .track__content {
+    padding-right: 0;
   }
 
   .inspector__left {

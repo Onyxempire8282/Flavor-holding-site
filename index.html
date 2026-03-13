@@ -17,10 +17,11 @@
       Flavor Holdings <span class="nav__logo-sub">LLC</span>
     </div>
     <ul class="nav__links">
-      <li><a href="#services" class="nav__link">Services</a></li>
-      <li><a href="#cipher"   class="nav__link">Claim Cipher™</a></li>
+      <li><a href="#services"   class="nav__link">Services</a></li>
+      <li><a href="#cipher"     class="nav__link">Claim Cipher™</a></li>
+      <li><a href="#track"      class="nav__link">Track Claim</a></li>
       <li><a href="#inspectors" class="nav__link">Join Our Network</a></li>
-      <li><a href="#carriers"  class="nav__link">For Carriers</a></li>
+      <li><a href="#carriers"   class="nav__link">For Carriers</a></li>
     </ul>
     <a href="#carriers" class="nav__cta">Assign Claims</a>
   </nav>
@@ -282,6 +283,45 @@
     </div>
   </section>
 
+  <!-- ══ TRACK ═════════════════════════════════════════════════ -->
+  <section class="track" id="track">
+    <div class="section-inner">
+      <div class="track__grid">
+
+        <div class="track__content reveal">
+          <p class="section-tag">Claim Tracking</p>
+          <h2>Track your <em>claim.</em></h2>
+          <p class="track__desc">
+            Carriers, TPAs, insurance companies, banks, and lienholders
+            can look up the real-time status of any claim assigned to
+            Flavor Holdings. Enter your claim number below and we'll
+            send a status update to the email on file.
+          </p>
+        </div>
+
+        <div class="track__callout reveal reveal--d2">
+          <p class="track__callout-eyebrow">Claim Cipher™ Portal</p>
+          <div class="track__callout-heading">Your claim, in real time.</div>
+          <p class="track__callout-body">
+            Once your claim is assigned to Flavor Holdings, you'll receive
+            a claim number. Use the Claim Cipher™ status portal to check
+            inspection progress, photo delivery, and completion status at
+            any time — no login required.
+          </p>
+          <a href="track.html" class="btn btn--teal track__callout-btn">
+            Check Claim Status
+          </a>
+          <p class="track__callout-note">
+            Don't have a claim number yet? Contact us at
+            <a href="mailto:admin@flav8r.net" class="track__callout-note-link">admin@flav8r.net</a>
+            to get started.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ══ INSPECTOR ═════════════════════════════════════════════ -->
   <section class="inspector" id="inspectors">
     <div class="inspector__bg-accent"></div>
@@ -312,8 +352,8 @@
         </div>
 
         <div class="form reveal reveal--d2">
-          <div class="form__heading">Express Interest</div>
-          <p class="form__sub">We'll reach out when work is available in your area.</p>
+          <div class="form__heading">Apply to Inspect</div>
+          <p class="form__sub">Fill out the form below and we'll be in touch within 2 business days.</p>
 
           <div class="form__row">
             <div>
@@ -344,8 +384,25 @@
             <option value="other">Other field inspection work</option>
           </select>
 
+          <label class="form__label" for="vehicle">Vehicle Year / Make / Model</label>
+          <input class="form__input" id="vehicle" type="text" placeholder="2022 Toyota Camry"/>
+
+          <label class="form__label">Days Available</label>
+          <div class="form__checkboxes">
+            <label class="form__checkbox"><input type="checkbox" value="Mon"/><span>Mon</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Tue"/><span>Tue</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Wed"/><span>Wed</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Thu"/><span>Thu</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Fri"/><span>Fri</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Sat"/><span>Sat</span></label>
+            <label class="form__checkbox"><input type="checkbox" value="Sun"/><span>Sun</span></label>
+          </div>
+
+          <label class="form__label" for="about">Tell Us About Yourself</label>
+          <textarea class="form__textarea" id="about" placeholder="A little about your background, availability, and why you're interested..."></textarea>
+
           <button class="form__submit" id="inspectorSubmit" type="button">
-            Submit Interest
+            Submit Application
           </button>
         </div>
 
@@ -374,7 +431,7 @@
             to discuss coverage availability in your markets and get set
             up in our system.
           </p>
-          <a href="mailto:claims@flav8r.net" class="btn btn--primary partners__header-cta">
+          <a href="mailto:admin@flav8r.net" class="btn btn--primary partners__header-cta">
             Contact Us to Get Started
           </a>
         </div>
@@ -444,13 +501,13 @@
           <div class="footer__col-heading">Contact</div>
           <p class="footer__contact-text">
             General Inquiries<br/>
-            <a href="mailto:info@flav8r.net" class="footer__contact-link">info@flav8r.net</a>
+            <a href="mailto:admin@flav8r.net" class="footer__contact-link">admin@flav8r.net</a>
             <br/><br/>
             Claim Assignments<br/>
-            <a href="mailto:claims@flav8r.net" class="footer__contact-link">claims@flav8r.net</a>
+            <a href="mailto:admin@flav8r.net" class="footer__contact-link">admin@flav8r.net</a>
             <br/><br/>
             Inspector Network<br/>
-            <a href="mailto:inspectors@flav8r.net" class="footer__contact-link">inspectors@flav8r.net</a>
+            <a href="mailto:inspects@flav8r.net" class="footer__contact-link">inspects@flav8r.net</a>
           </p>
         </div>
 

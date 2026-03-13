@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Your Claim — Flavor Holdings LLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* ── TRACKER PAGE ─────────────────────────────────────────── */
+    .tracker {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 7rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tracker__inner {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .tracker__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-teal);
+      margin-bottom: var(--space-md);
+    }
+
+    .tracker__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--color-cream);
+      margin-bottom: 1rem;
+    }
+
+    .tracker__title em {
+      color: var(--color-gold);
+      font-style: italic;
+    }
+
+    .tracker__sub {
+      font-size: 0.9rem;
+      color: var(--color-cream-dim);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── LOOKUP CARD ──────────────────────────────────────────── */
+    .lookup {
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .lookup__input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      color: var(--color-cream);
+      padding: 0.75rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 300;
+      margin-bottom: var(--space-md);
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .lookup__input:focus {
+      border-color: var(--color-gold);
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .lookup__input::placeholder {
+      color: var(--color-muted);
+      font-size: 0.82rem;
+    }
+
+    .lookup__input--vin {
+      text-transform: uppercase;
+    }
+
+    .lookup__hint {
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      margin-top: -0.75rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .lookup__label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .lookup__btn {
+      width: 100%;
+      background: var(--color-gold);
+      color: var(--color-navy);
+      border: none;
+      padding: 1rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: 0;
+    }
+
+    .lookup__btn:hover {
+      background: var(--color-gold-light);
+      transform: translateY(-1px);
+    }
+
+    .lookup__btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .lookup__spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--color-navy);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto;
+    }
+
+    .lookup__btn--loading .lookup__spinner {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── ERROR STATE ──────────────────────────────────────────── */
+    .tracker__error {
+      display: none;
+      background: rgba(231, 76, 60, 0.06);
+      border: 1px solid rgba(231, 76, 60, 0.2);
+      padding: 2rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tracker__error--visible {
+      display: block;
+    }
+
+    .tracker__error-heading {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #e8a09a;
+      margin-bottom: 0.75rem;
+    }
+
+    .tracker__error-msg {
+      font-size: 0.85rem;
+      color: #c89a94;
+      line-height: 1.7;
+    }
+
+    .tracker__error-link {
+      color: var(--color-gold);
+      text-decoration: none;
+    }
+
+    /* ── PIPELINE ─────────────────────────────────────────────── */
+    .pipeline {
+      display: none;
+      margin-bottom: 2rem;
+    }
+
+    .pipeline--visible {
+      display: block;
+    }
+
+    .pipeline__heading {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-md);
+    }
+
+    .pipeline__step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .pipeline__indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 28px;
+    }
+
+    .pipeline__dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      border: 1px solid var(--color-border);
+      color: var(--color-muted);
+      background: var(--color-navy);
+    }
+
+    .pipeline__dot--done {
+      border-color: var(--color-success);
+      background: rgba(111, 200, 111, 0.1);
+      color: var(--color-success);
+    }
+
+    .pipeline__dot--active {
+      border-color: var(--color-teal);
+      background: rgba(45, 212, 191, 0.1);
+      color: var(--color-teal);
+      box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
+    }
+
+    .pipeline__line {
+      width: 1px;
+      height: 28px;
+      background: var(--color-border);
+      margin: 4px 0;
+    }
+
+    .pipeline__line--done {
+      background: var(--color-success);
+    }
+
+    .pipeline__body {
+      padding: 0.3rem 0 1.5rem;
+      min-height: 56px;
+    }
+
+    .pipeline__step:last-child .pipeline__body {
+      padding-bottom: 0;
+    }
+
+    .pipeline__step-title {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--color-cream);
+      margin-bottom: 0.15rem;
+    }
+
+    .pipeline__step--pending .pipeline__step-title {
+      color: var(--color-muted);
+    }
+
+    .pipeline__step-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--color-muted);
+    }
+
+    /* ── DETAILS PANEL ────────────────────────────────────────── */
+    .details {
+      display: none;
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      padding: 2rem 2.5rem;
+    }
+
+    .details--visible {
+      display: block;
+    }
+
+    .details__heading {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-md);
+    }
+
+    .details__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--color-border-dim);
+    }
+
+    .details__row:last-child {
+      border-bottom: none;
+    }
+
+    .details__label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .details__value {
+      font-size: 0.85rem;
+      color: var(--color-cream);
+      font-weight: 400;
+      text-align: right;
+    }
+
+    /* ── BACK LINK ────────────────────────────────────────────── */
+    .tracker__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--color-gold);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .tracker__back:hover {
+      color: var(--color-gold-light);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__logo">
+      Flavor Holdings <span class="nav__logo-sub">LLC</span>
+    </div>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="index.html#services" class="nav__link">Services</a></li>
+      <li><a href="index.html#cipher" class="nav__link">Claim Cipher™</a></li>
+      <li><a href="index.html#inspectors" class="nav__link">Join Our Network</a></li>
+      <li><a href="index.html#carriers" class="nav__link">For Carriers</a></li>
+    </ul>
+    <a href="index.html#carriers" class="nav__cta">Assign Claims</a>
+  </nav>
+
+  <main class="tracker">
+    <div class="tracker__inner">
+
+      <a href="index.html" class="tracker__back">&larr; Back to Home</a>
+
+      <p class="tracker__eyebrow">Claim Cipher™ Portal</p>
+      <h1 class="tracker__title">Track your <em>claim.</em></h1>
+      <p class="tracker__sub">
+        Enter your claim number and the last 6 digits of the vehicle's
+        VIN to look up the real-time status of your inspection.
+      </p>
+
+      <!-- Lookup Form -->
+      <div class="lookup">
+        <label class="lookup__label" for="claimNum">Claim Number</label>
+        <input class="lookup__input" id="claimNum" type="text" placeholder="FH-2026-0000"/>
+
+        <label class="lookup__label" for="vinLast6">Last 6 of VIN</label>
+        <input class="lookup__input lookup__input--vin" id="vinLast6" type="text" maxlength="6" placeholder="A1B2C3"/>
+        <p class="lookup__hint">Found on the vehicle registration or insurance declaration page.</p>
+
+        <button class="lookup__btn" id="lookupBtn" type="button">
+          <span class="lookup__spinner"></span>
+          <span id="lookupBtnText">Check Claim Status</span>
+        </button>
+      </div>
+
+      <!-- Error State -->
+      <div class="tracker__error" id="errorBlock">
+        <div class="tracker__error-heading">Claim Not Found</div>
+        <p class="tracker__error-msg">
+          No claim found matching that number and VIN. Please check your
+          claim number and try again. If you need assistance contact
+          <a href="mailto:admin@flav8r.net" class="tracker__error-link">admin@flav8r.net</a>
+        </p>
+      </div>
+
+      <!-- Pipeline -->
+      <div class="pipeline" id="pipeline">
+        <div class="pipeline__heading">Inspection Progress</div>
+        <div id="pipelineSteps"></div>
+      </div>
+
+      <!-- Details Panel -->
+      <div class="details" id="details">
+        <div class="details__heading">Claim Details</div>
+        <div id="detailsRows"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    var SUPABASE_URL  = 'https://qrouuoycvxxxutkxkxpp.supabase.co';
+    var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyb3V1b3ljdnh4eHV0a3hreHBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODMyNDgsImV4cCI6MjA3Nzc1OTI0OH0.LXKVdTXNgHgoILlHJcSaGnzyWlaT0-oBxbEgl5ipA48';
+
+    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    var lookupBtn   = document.getElementById('lookupBtn');
+    var btnText     = document.getElementById('lookupBtnText');
+    var claimInput  = document.getElementById('claimNum');
+    var vinInput    = document.getElementById('vinLast6');
+    var errorBlock  = document.getElementById('errorBlock');
+    var pipelineEl  = document.getElementById('pipeline');
+    var stepsEl     = document.getElementById('pipelineSteps');
+    var detailsEl   = document.getElementById('details');
+    var detailsRows = document.getElementById('detailsRows');
+
+    function hideAll() {
+      errorBlock.classList.remove('tracker__error--visible');
+      pipelineEl.classList.remove('pipeline--visible');
+      detailsEl.classList.remove('details--visible');
+    }
+
+    function setLoading(on) {
+      lookupBtn.disabled = on;
+      if (on) {
+        lookupBtn.classList.add('lookup__btn--loading');
+        btnText.textContent = 'Searching\u2026';
+      } else {
+        lookupBtn.classList.remove('lookup__btn--loading');
+        btnText.textContent = 'Check Claim Status';
+      }
+    }
+
+    function fmtDate(val) {
+      if (!val) return '\u2014';
+      return new Date(val).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+    }
+
+    function buildPipeline(d) {
+      var status = (d.status || '').toUpperCase();
+      var hasInspector    = !!d.inspector_name;
+      var hasAppointment  = !!d.appointment;
+      var isInProgress    = status === 'IN_PROGRESS' || status === 'COMPLETED';
+      var hasPhotos       = (d.photo_count > 0) || d.photos_completed === true;
+      var isCompleted     = status === 'COMPLETED';
+      var fileComplete    = isCompleted && d.file_total > 0;
+
+      var steps = [
+        { title: 'Claim Received',        done: true,           sub: 'Received ' + fmtDate(d.created_at) },
+        { title: 'Inspector Assigned',     done: hasInspector,   sub: hasInspector ? d.inspector_name : '' },
+        { title: 'Inspection Scheduled',   done: hasAppointment, sub: hasAppointment ? fmtDate(d.appointment) : '' },
+        { title: 'Vehicle Inspected',      done: isInProgress,   sub: isInProgress ? 'Inspection complete' : '' },
+        { title: 'Photos Uploaded',        done: hasPhotos,      sub: hasPhotos ? d.photo_count + ' photo(s) on file' : '' },
+        { title: 'Appraisal in Progress',  done: isCompleted,    sub: isCompleted ? 'Appraisal finalized' : '' },
+        { title: 'File Complete',          done: fileComplete,   sub: fileComplete ? 'Completed ' + fmtDate(d.completion_date) : '' }
+      ];
+
+      // Find the furthest done index to mark "active" (first not-done)
+      var activeIdx = -1;
+      for (var i = 0; i < steps.length; i++) {
+        if (!steps[i].done) { activeIdx = i; break; }
+      }
+
+      var html = '';
+      for (var j = 0; j < steps.length; j++) {
+        var s = steps[j];
+        var isDone   = s.done;
+        var isActive = (j === activeIdx);
+        var stateClass = isDone ? '' : (isActive ? '' : 'pipeline__step--pending');
+
+        var dotClass = 'pipeline__dot';
+        var dotChar  = '\u25CB'; // ○
+        if (isDone)        { dotClass += ' pipeline__dot--done';   dotChar = '\u2713'; }
+        else if (isActive) { dotClass += ' pipeline__dot--active'; dotChar = '\u25CE'; }
+
+        html += '<div class="pipeline__step ' + stateClass + '">';
+        html +=   '<div class="pipeline__indicator">';
+        html +=     '<div class="' + dotClass + '">' + dotChar + '</div>';
+        if (j < steps.length - 1) {
+          var lineClass = 'pipeline__line' + (isDone ? ' pipeline__line--done' : '');
+          html +=   '<div class="' + lineClass + '"></div>';
+        }
+        html +=   '</div>';
+        html +=   '<div class="pipeline__body">';
+        html +=     '<div class="pipeline__step-title">' + s.title + '</div>';
+        if (s.sub) {
+          html +=   '<div class="pipeline__step-sub">' + s.sub + '</div>';
+        }
+        html +=   '</div>';
+        html += '</div>';
+      }
+
+      stepsEl.innerHTML = html;
+    }
+
+    function buildDetails(d) {
+      var rows = [
+        ['Claim Number', d.claim_number || '\u2014'],
+        ['Vehicle',      d.vehicle || '\u2014'],
+        ['Firm',         d.firm || '\u2014'],
+        ['Inspector',    d.inspector_name || '\u2014'],
+        ['Appointment',  fmtDate(d.appointment)],
+        ['Photos on File', (d.photo_count != null ? d.photo_count : '\u2014')]
+      ];
+
+      var html = '';
+      for (var i = 0; i < rows.length; i++) {
+        html += '<div class="details__row">';
+        html +=   '<span class="details__label">' + rows[i][0] + '</span>';
+        html +=   '<span class="details__value">' + rows[i][1] + '</span>';
+        html += '</div>';
+      }
+      detailsRows.innerHTML = html;
+    }
+
+    lookupBtn.addEventListener('click', async function () {
+      var claimNum = claimInput.value.trim();
+      var vinLast6 = vinInput.value.trim();
+      if (!claimNum || !vinLast6) return;
+
+      hideAll();
+      setLoading(true);
+
+      try {
+        var result = await sb.rpc('get_claim_status', {
+          p_claim_number: claimNum.toUpperCase(),
+          p_vin_last6:    vinLast6.toUpperCase()
+        });
+
+        var data  = result.data;
+        var error = result.error;
+
+        if (error || !data || data.found === false) {
+          errorBlock.classList.add('tracker__error--visible');
+          setLoading(false);
+          return;
+        }
+
+        buildPipeline(data);
+        buildDetails(data);
+        pipelineEl.classList.add('pipeline--visible');
+        detailsEl.classList.add('details--visible');
+      } catch (e) {
+        errorBlock.classList.add('tracker__error--visible');
+      }
+
+      setLoading(false);
+    });
+
+  }());
+  </script>
+</body>
+</html>
