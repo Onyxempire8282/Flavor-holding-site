@@ -526,6 +526,148 @@
         order: -1;
       }
     }
+
+    /* ── PHOTOS GRID ──────────────────────────────────────────── */
+    .portal-section {
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .portal-section__heading {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-gold-dim);
+      margin-bottom: 1rem;
+    }
+
+    .portal-section__muted {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+      line-height: 1.7;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .photos-grid__item {
+      display: block;
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      text-decoration: none;
+      overflow: hidden;
+      transition: border-color 0.25s ease;
+    }
+
+    .photos-grid__item:hover {
+      border-color: var(--color-gold);
+    }
+
+    .photos-grid__item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photos-grid__label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding: 0.5rem 0.6rem;
+    }
+
+    /* ── DOCUMENTS LIST ───────────────────────────────────────── */
+    .documents-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--color-navy-light);
+      border: 1px solid var(--color-border);
+      margin-bottom: 0.5rem;
+    }
+
+    .documents-row__name {
+      font-size: 0.82rem;
+      color: var(--color-cream);
+      font-weight: 400;
+    }
+
+    .documents-row__type {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-top: 0.2rem;
+    }
+
+    .documents-row__btn {
+      background: transparent;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--color-gold);
+      padding: 0.4rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+
+    .documents-row__btn:hover {
+      background: rgba(201, 168, 76, 0.08);
+      border-color: var(--color-gold);
+    }
+
+    /* ── PACKAGE CTA ──────────────────────────────────────────── */
+    .package-btn {
+      background: var(--color-gold);
+      color: var(--color-navy);
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: 0;
+    }
+
+    .package-btn:hover {
+      background: var(--color-gold-light);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+      .portal-section {
+        padding: 0 1.25rem 2rem;
+      }
+
+      .photos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+
+      .documents-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -624,6 +766,24 @@
 
     </div>
 
+    <!-- ── PHOTOS ────────────────────────────────────────────── -->
+    <section id="photos-section" class="portal-section" style="display:none;">
+      <div class="portal-section__heading">Photos</div>
+      <div id="photos-grid"></div>
+    </section>
+
+    <!-- ── DOCUMENTS ─────────────────────────────────────────── -->
+    <section id="documents-section" class="portal-section" style="display:none;">
+      <div class="portal-section__heading">Documents</div>
+      <div id="documents-list"></div>
+    </section>
+
+    <!-- ── CLAIM PACKAGE ─────────────────────────────────────── -->
+    <section id="package-section" class="portal-section" style="display:none;">
+      <div class="portal-section__heading">Claim Package</div>
+      <div id="package-cta"></div>
+    </section>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -635,6 +795,10 @@
     var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2aXdsdGZxbHVueHh2a2FqcHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0MTQ4MTIsImV4cCI6MjA4Mzk5MDgxMn0._4Me4DsKHJ0SRleOmmOGPAcJKq8hmFUDIfNDH66Zu8o';
 
     var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    var SUPABASE_CD_URL  = 'https://qrouuoycvxxxutkxkxpp.supabase.co';
+    var SUPABASE_CD_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyb3V1b3ljdnh4eHV0a3hreHBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODMyNDgsImV4cCI6MjA3Nzc1OTI0OH0.LXKVdTXNgHgoILlHJcSaGnzyWlaT0-oBxbEgl5ipA48';
+    var sbCD = window.supabase.createClient(SUPABASE_CD_URL, SUPABASE_CD_ANON);
 
     var lookupBtn    = document.getElementById('lookupBtn');
     var btnText      = document.getElementById('lookupBtnText');
@@ -650,6 +814,9 @@
     var pipelineCta  = document.getElementById('pipelineCta');
     var notesBlock   = document.getElementById('notesBlock');
     var notesBody    = document.getElementById('notesBody');
+    var photosSection   = document.getElementById('photos-section');
+    var documentsSection = document.getElementById('documents-section');
+    var packageSection  = document.getElementById('package-section');
 
     function hideAll() {
       errorBlock.classList.remove('tracker__error--visible');
@@ -657,6 +824,9 @@
       resultsEl.classList.remove('tracker__results--visible');
       pipelineCta.classList.remove('pipeline__cta--visible');
       notesBlock.classList.remove('notes--visible');
+      photosSection.style.display = 'none';
+      documentsSection.style.display = 'none';
+      packageSection.style.display = 'none';
     }
 
     function setLoading(on) {
@@ -782,7 +952,7 @@
       setLoading(true);
 
       try {
-        var result = await sb.rpc('get_claim_status', {
+        var result = await sb.rpc('get_claim_portal_data', {
           p_claim_number: claimNum.toUpperCase(),
           p_vin_last6:    vinLast6.toUpperCase()
         });
@@ -790,36 +960,155 @@
         var data  = result.data;
         var error = result.error;
 
-        if (error || !data || data.found === false) {
+        if (error || !data || data.error === 'Claim not found' || data.found === false) {
           errorBlock.classList.add('tracker__error--visible');
           setLoading(false);
           return;
         }
 
-        buildClaimHeader(data);
-        buildPipeline(data);
-        buildDetails(data);
+        // Map new RPC fields to the shape existing render functions expect
+        var v = data.vehicle || {};
+        var mapped = Object.assign({}, data, {
+          vehicle: v.make && v.model ? (v.make + ' ' + v.model) : (typeof data.vehicle === 'string' ? data.vehicle : 'Vehicle'),
+          appointment: data.appointment_time || data.appointment
+        });
+
+        buildClaimHeader(mapped);
+        buildPipeline(mapped);
+        buildDetails(mapped);
 
         divider.classList.add('tracker__divider--visible');
         resultsEl.classList.add('tracker__results--visible');
 
         // File complete CTA
-        var st = (data.status || '').toUpperCase();
-        if (st === 'COMPLETED' && data.file_total > 0) {
+        var st = (mapped.status || '').toUpperCase();
+        if (st === 'COMPLETED' && mapped.file_total > 0) {
           pipelineCta.classList.add('pipeline__cta--visible');
         }
 
         // Public notes
-        if (data.public_notes && data.public_notes.trim()) {
-          notesBody.textContent = data.public_notes;
+        if (mapped.public_notes && mapped.public_notes.trim()) {
+          notesBody.textContent = mapped.public_notes;
           notesBlock.classList.add('notes--visible');
         }
+
+        // New portal sections
+        renderPhotos(data.claim_id, data.firm_id);
+        renderDocuments(data.documents);
+        renderPackageButton(data.package);
       } catch (e) {
         errorBlock.classList.add('tracker__error--visible');
       }
 
       setLoading(false);
     });
+
+    // ── PHOTOS ─────────────────────────────────────────────────
+    async function renderPhotos(claimId, firmId) {
+      var grid = document.getElementById('photos-grid');
+      photosSection.style.display = '';
+
+      grid.innerHTML = '<p class="portal-section__muted">Loading photos\u2026</p>';
+
+      try {
+        var res = await sbCD
+          .from('claim_photos')
+          .select('id, photo_type, storage_path, order_index')
+          .eq('claim_id', claimId)
+          .order('order_index');
+
+        var photos = res.data;
+        if (res.error || !photos || photos.length === 0) {
+          grid.innerHTML = '<p class="portal-section__muted">No photos available.</p>';
+          return;
+        }
+
+        var signed = await Promise.all(photos.map(async function (p) {
+          var s = await sbCD.storage
+            .from('claim-photos')
+            .createSignedUrl(p.storage_path, 3600);
+          return { photo_type: p.photo_type, url: s.data ? s.data.signedUrl : null };
+        }));
+
+        grid.className = 'photos-grid';
+        grid.innerHTML = signed
+          .filter(function (p) { return p.url; })
+          .map(function (p) {
+            return '<a href="' + p.url + '" target="_blank" class="photos-grid__item">' +
+              '<img src="' + p.url + '" alt="' + p.photo_type + '" loading="lazy"/>' +
+              '<span class="photos-grid__label">' + p.photo_type + '</span>' +
+              '</a>';
+          }).join('');
+
+        if (!grid.innerHTML) {
+          grid.className = '';
+          grid.innerHTML = '<p class="portal-section__muted">No photos available.</p>';
+        }
+      } catch (err) {
+        grid.className = '';
+        grid.innerHTML = '<p class="portal-section__muted">Could not load photos.</p>';
+        console.error('renderPhotos error:', err);
+      }
+    }
+
+    // ── DOCUMENTS ─────────────────────────────────────────────
+    function renderDocuments(documents) {
+      var list = document.getElementById('documents-list');
+      documentsSection.style.display = '';
+
+      if (!documents || documents.length === 0) {
+        list.innerHTML = '<p class="portal-section__muted">No documents available.</p>';
+        return;
+      }
+
+      list.innerHTML = documents.map(function (d) {
+        return '<div class="documents-row">' +
+          '<div>' +
+            '<div class="documents-row__name">' + d.file_name + '</div>' +
+            '<div class="documents-row__type">' + d.type.replace(/_/g, ' ') + '</div>' +
+          '</div>' +
+          '<button onclick="window.__downloadDocument(\'' + d.storage_path + '\', \'' + d.file_name + '\')" class="documents-row__btn">Download</button>' +
+          '</div>';
+      }).join('');
+    }
+
+    window.__downloadDocument = async function (storagePath, fileName) {
+      try {
+        var res = await sbCD.storage
+          .from('documents')
+          .createSignedUrl(storagePath, 300);
+        if (res.data && res.data.signedUrl) window.open(res.data.signedUrl, '_blank');
+      } catch (err) {
+        console.error('downloadDocument error:', err);
+      }
+    };
+
+    // ── CLAIM PACKAGE ─────────────────────────────────────────
+    function renderPackageButton(pkg) {
+      var cta = document.getElementById('package-cta');
+      packageSection.style.display = '';
+
+      if (!pkg) {
+        cta.innerHTML = '<p class="portal-section__muted">' +
+          'Claim package not yet available. Check back once the inspection is complete.' +
+          '</p>';
+        return;
+      }
+
+      cta.innerHTML = '<button onclick="window.__downloadPackage(\'' + pkg.storage_path + '\', \'' + pkg.file_name + '\')" class="package-btn">' +
+        'Download Claim Package</button>';
+    }
+
+    window.__downloadPackage = async function (storagePath, fileName) {
+      try {
+        var res = await sbCD.storage
+          .from('packages')
+          .createSignedUrl(storagePath, 300);
+        if (res.data && res.data.signedUrl) window.open(res.data.signedUrl, '_blank');
+      } catch (err) {
+        console.error('downloadPackage error:', err);
+      }
+    };
 
   }());
   </script>
