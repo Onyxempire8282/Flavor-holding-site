@@ -927,10 +927,10 @@
     function buildDetails(d) {
       var rows = [
         ['Firm',         d.firm || '\u2014'],
-        ['Inspector',    d.inspector_name || '\u2014'],
+        ['Inspector',    d.inspector || '\u2014'],
         ['Appointment',  fmtDate(d.appointment)],
-        ['Photos on File', (d.photo_count != null ? d.photo_count : '\u2014')],
-        ['Last Updated',  fmtDate(d.created_at)]
+        ['Photos on File', d.photos_completed ? 'Yes' : 'On file: checking\u2026'],
+        ['Last Updated',  d.updated_at ? new Date(d.updated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '\u2014']
       ];
 
       var html = '';
@@ -969,8 +969,14 @@
         // Map new RPC fields to the shape existing render functions expect
         var v = data.vehicle || {};
         var mapped = Object.assign({}, data, {
-          vehicle: v.make && v.model ? (v.make + ' ' + v.model) : (typeof data.vehicle === 'string' ? data.vehicle : 'Vehicle'),
-          appointment: data.appointment_time || data.appointment
+          vehicle: v.make && v.model
+            ? ((v.year ? v.year + ' ' : '') + v.make + ' ' + v.model)
+            : (typeof data.vehicle === 'string' ? data.vehicle : 'Vehicle'),
+          appointment: data.appointment_time || data.appointment,
+          firm: data.firm || '\u2014',
+          inspector: data.inspector || '\u2014',
+          updated_at: data.updated_at || null,
+          photos_completed: data.photos_completed || false
         });
 
         buildClaimHeader(mapped);
