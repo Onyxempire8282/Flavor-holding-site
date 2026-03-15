@@ -753,8 +753,7 @@
         </div>
 
         <div class="pipeline__cta" id="pipelineCta">
-          Your file is complete. Contact us to receive your deliverables:
-          <a href="mailto:admin@flav8r.net" class="pipeline__cta-link">admin@flav8r.net</a>
+          Your file is complete. <a href="#package-section" class="pipeline__cta-link">Download your claim package below.</a>
         </div>
       </div>
 
@@ -863,7 +862,10 @@
 
       var html = '';
       html += '<div class="claim-header__number">' + (d.claim_number || '\u2014') + '</div>';
-      html += '<div class="claim-header__vehicle">' + (d.vehicle || 'Vehicle') + '</div>';
+      var vehicleDisplay = typeof d.vehicle === 'object' && d.vehicle
+        ? [d.vehicle.year, d.vehicle.make, d.vehicle.model].filter(Boolean).join(' ')
+        : (d.vehicle || 'Vehicle');
+      html += '<div class="claim-header__vehicle">' + vehicleDisplay + '</div>';
       html += '<span class="' + badgeClass + '">' + badgeLabel + '</span>';
       claimHeader.innerHTML = html;
     }
