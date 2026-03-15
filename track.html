@@ -995,7 +995,7 @@
         // New portal sections
         renderPhotos(data.claim_id, data.firm_id);
         renderDocuments(data.documents);
-        renderPackageButton(data.package);
+        renderPackageButton(data.claim_id, data.firm_id);
       } catch (e) {
         errorBlock.classList.add('tracker__error--visible');
       }
@@ -1084,31 +1084,41 @@
     };
 
     // ── CLAIM PACKAGE ─────────────────────────────────────────
-    function renderPackageButton(pkg) {
+    function renderPackageButton(claimId, firmId) {
+      var section = document.getElementById('package-section');
       var cta = document.getElementById('package-cta');
-      packageSection.style.display = '';
+      section.style.display = '';
 
-      if (!pkg) {
-        cta.innerHTML = '<p class="portal-section__muted">' +
-          'Claim package not yet available. Check back once the inspection is complete.' +
-          '</p>';
-        return;
-      }
+      cta.innerHTML = '<button onclick="generateAndDownloadPackage()" class="package-btn">Download Claim Package</button>';
 
-      cta.innerHTML = '<button onclick="window.__downloadPackage(\'' + pkg.storage_path + '\', \'' + pkg.file_name + '\')" class="package-btn">' +
-        'Download Claim Package</button>';
+      window.generateAndDownloadPackage = async function() {
+        var btn = cta.querySelector('button');
+        btn.textContent = 'Generating...';
+        btn.disabled = true;
+        try {
+          var resp = await fetch(
+            'https://qrouuoycvxxxutkxkxpp.supabase.co/functions/v1/generate-claim-package',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ claim_id: claimId, firm_id: firmId })
+            }
+          );
+          var data = await resp.json();
+          if (data.signed_url) {
+            window.open(data.signed_url, '_blank');
+            btn.textContent = 'Download Claim Package';
+          } else {
+            btn.textContent = 'Generation failed. Try again.';
+          }
+        } catch (err) {
+          console.error('Package generation error:', err);
+          btn.textContent = 'Generation failed. Try again.';
+        } finally {
+          btn.disabled = false;
+        }
+      };
     }
-
-    window.__downloadPackage = async function (storagePath, fileName) {
-      try {
-        var res = await sbCD.storage
-          .from('packages')
-          .createSignedUrl(storagePath, 300);
-        if (res.data && res.data.signedUrl) window.open(res.data.signedUrl, '_blank');
-      } catch (err) {
-        console.error('downloadPackage error:', err);
-      }
-    };
 
   }());
   </script>
