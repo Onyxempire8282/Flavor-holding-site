@@ -792,6 +792,12 @@
       <div id="package-cta"></div>
     </section>
 
+    <!-- ── CLAIM COMMUNICATIONS ──────────────────────────────── -->
+    <section id="messages-section" class="portal-section" style="display:none;">
+      <div class="portal-section__heading">Claim Communications</div>
+      <div id="messages-list"></div>
+    </section>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -838,6 +844,7 @@
       documentsSection.style.display = 'none';
       packageSection.style.display = 'none';
       if (carrierNotes) carrierNotes.classList.remove('notes--visible');
+      document.getElementById('messages-section').style.display = 'none';
     }
 
     function setLoading(on) {
@@ -1030,6 +1037,7 @@
         renderPhotos(data.claim_id, data.firm_id);
         renderDocuments(data.documents);
         renderPackageButton(data.claim_id, data.firm_id);
+        renderMessages(data.messages);
       } catch (e) {
         errorBlock.classList.add('tracker__error--visible');
       }
@@ -1152,6 +1160,31 @@
           btn.disabled = false;
         }
       };
+    }
+
+    // ── CLAIM COMMUNICATIONS ──────────────────────────────────
+    function renderMessages(messages) {
+      var section = document.getElementById('messages-section');
+      var list = document.getElementById('messages-list');
+
+      if (!messages || messages.length === 0) return;
+
+      section.style.display = '';
+      list.innerHTML = messages.map(function(m) {
+        var date = new Date(m.created_at).toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+        return '<div class="documents-row" style="flex-direction:column; align-items:flex-start; gap:0.5rem;">' +
+          '<div style="display:flex; justify-content:space-between; width:100%;">' +
+            '<span class="detail__doc-type">' + (m.author_name || 'Coordinator') + '</span>' +
+            '<span class="portal-section__muted" style="font-size:0.72rem;">' + date + '</span>' +
+          '</div>' +
+          '<div style="font-size:0.82rem; color:var(--color-cream); white-space:pre-wrap; line-height:1.6;">' +
+            m.body +
+          '</div>' +
+        '</div>';
+      }).join('');
     }
 
   }());
