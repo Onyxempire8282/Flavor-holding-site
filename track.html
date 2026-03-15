@@ -761,6 +761,11 @@
       <div class="tracker__right">
         <div class="pipeline__heading">Inspection Progress</div>
         <div id="pipelineSteps"></div>
+
+        <div id="carrierNotes" class="notes" style="display:none; margin-top:1.5rem;">
+          <div class="notes__heading">File Notes</div>
+          <div id="carrierNotesBody" class="notes__body"></div>
+        </div>
       </div>
 
     </div>
@@ -813,9 +818,11 @@
     var pipelineCta  = document.getElementById('pipelineCta');
     var notesBlock   = document.getElementById('notesBlock');
     var notesBody    = document.getElementById('notesBody');
-    var photosSection   = document.getElementById('photos-section');
+    var photosSection    = document.getElementById('photos-section');
     var documentsSection = document.getElementById('documents-section');
-    var packageSection  = document.getElementById('package-section');
+    var packageSection   = document.getElementById('package-section');
+    var carrierNotes     = document.getElementById('carrierNotes');
+    var carrierNotesBody = document.getElementById('carrierNotesBody');
 
     function hideAll() {
       errorBlock.classList.remove('tracker__error--visible');
@@ -826,6 +833,7 @@
       photosSection.style.display = 'none';
       documentsSection.style.display = 'none';
       packageSection.style.display = 'none';
+      if (carrierNotes) carrierNotes.style.display = 'none';
     }
 
     function setLoading(on) {
@@ -870,23 +878,31 @@
       claimHeader.innerHTML = html;
     }
 
+    function fmtTime(ts) {
+      if (!ts) return null;
+      return new Date(ts).toLocaleDateString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+    }
+
     function buildPipeline(d) {
       var status = (d.status || '').toUpperCase();
-      var hasInspector    = !!d.inspector_name;
-      var hasAppointment  = !!d.appointment;
+      var hasInspector    = !!d.inspector || !!d.inspector_name;
+      var hasAppointment  = !!d.appointment || !!d.scheduled_at;
       var isInProgress    = status === 'IN_PROGRESS' || status === 'COMPLETED';
       var hasPhotos       = (d.photo_count > 0) || d.photos_completed === true;
       var isCompleted     = status === 'COMPLETED';
-      var fileComplete    = isCompleted && d.file_total > 0;
+      var fileComplete    = isCompleted && (d.file_total > 0 || !!d.writing_completed_at);
 
       var steps = [
-        { title: 'Claim Received',        done: true,           sub: 'Received ' + fmtDate(d.created_at) },
-        { title: 'Inspector Assigned',     done: hasInspector,   sub: d.assigned_at ? fmtDate(d.assigned_at) : 'Pending assignment' },
-        { title: 'Inspection Scheduled',   done: hasAppointment, sub: hasAppointment ? fmtDate(d.appointment) : 'Pending scheduling' },
-        { title: 'Vehicle Inspected',      done: isInProgress,   sub: d.inspected_at ? fmtDate(d.inspected_at) : 'Pending inspection' },
-        { title: 'Photos Uploaded',        done: hasPhotos,      sub: hasPhotos ? d.photo_count + ' photo(s) on file' : '' },
-        { title: 'Appraisal in Progress',  done: isCompleted,    sub: d.appraisal_completed_at ? fmtDate(d.appraisal_completed_at) : 'Awaiting appraisal' },
-        { title: 'File Complete',          done: fileComplete,   sub: d.completion_date ? fmtDate(d.completion_date) : 'Pending completion' }
+        { title: 'Claim Received',        done: true,           sub: fmtTime(d.created_at) || 'Received \u2014' },
+        { title: 'Inspector Assigned',     done: hasInspector,   sub: d.inspector || d.inspector_name || 'Pending assignment' },
+        { title: 'Inspection Scheduled',   done: hasAppointment, sub: fmtTime(d.scheduled_at) || fmtTime(d.appointment) || 'Pending scheduling' },
+        { title: 'Vehicle Inspected',      done: isInProgress,   sub: fmtTime(d.completed_at) || fmtTime(d.inspected_at) || 'Pending inspection' },
+        { title: 'Photos Uploaded',        done: hasPhotos,      sub: hasPhotos ? (d.photo_count ? d.photo_count + ' photo(s) on file' : 'Photos on file') : '' },
+        { title: 'Appraisal in Progress',  done: isCompleted,    sub: fmtTime(d.writing_started_at) || fmtTime(d.appraisal_completed_at) || 'Awaiting appraisal' },
+        { title: 'File Complete',          done: fileComplete,   sub: fmtTime(d.writing_completed_at) || fmtTime(d.completion_date) || 'Pending completion' }
       ];
 
       var activeIdx = -1;
@@ -998,6 +1014,12 @@
         if (mapped.public_notes && mapped.public_notes.trim()) {
           notesBody.textContent = mapped.public_notes;
           notesBlock.classList.add('notes--visible');
+        }
+
+        // Carrier / file notes
+        if (data.public_notes && data.public_notes.trim()) {
+          carrierNotesBody.textContent = data.public_notes;
+          carrierNotes.style.display = '';
         }
 
         // New portal sections
