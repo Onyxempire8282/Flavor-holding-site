@@ -762,7 +762,7 @@
         <div class="pipeline__heading">Inspection Progress</div>
         <div id="pipelineSteps"></div>
 
-        <div id="carrierNotes" class="notes" style="display:none; margin-top:1.5rem;">
+        <div id="carrierNotes" class="notes" style="margin-top:1.5rem;">
           <div class="notes__heading">File Notes</div>
           <div id="carrierNotesBody" class="notes__body"></div>
         </div>
@@ -833,7 +833,7 @@
       photosSection.style.display = 'none';
       documentsSection.style.display = 'none';
       packageSection.style.display = 'none';
-      if (carrierNotes) carrierNotes.style.display = 'none';
+      if (carrierNotes) carrierNotes.classList.remove('notes--visible');
     }
 
     function setLoading(on) {
@@ -1019,7 +1019,7 @@
         // Carrier / file notes
         if (data.public_notes && data.public_notes.trim()) {
           carrierNotesBody.textContent = data.public_notes;
-          carrierNotes.style.display = '';
+          carrierNotes.classList.add('notes--visible');
         }
 
         // New portal sections
