@@ -1036,7 +1036,7 @@
           .map(function (p) {
             return '<a href="' + p.url + '" target="_blank" class="photos-grid__item">' +
               '<img src="' + p.url + '" alt="' + p.photo_type + '" loading="lazy"/>' +
-              '<span class="photos-grid__label">' + p.photo_type + '</span>' +
+              '<span class="photos-grid__label">' + (p.photo_type && p.photo_type !== 'null' ? p.photo_type.replace(/_/g, ' ') : '') + '</span>' +
               '</a>';
           }).join('');
 
