@@ -189,3 +189,178 @@
   }
 
 }());
+
+// ── CLAIM MODAL ──────────────────────────────────────────────
+
+var CLAIM_ENDPOINT = 'https://qrouuoycvxxxutkxkxpp.supabase.co/functions/v1/public-claim-submit';
+
+function openClaimModal() {
+  var modal = document.getElementById('claimModal');
+  if (!modal) return;
+  modal.classList.add('claim-modal--open');
+  document.body.classList.add('body--modal-open');
+  document.getElementById('cm_claim_number').focus();
+}
+
+function closeClaimModal() {
+  var modal = document.getElementById('claimModal');
+  if (!modal) return;
+  modal.classList.remove('claim-modal--open');
+  document.body.classList.remove('body--modal-open');
+  resetClaimModal();
+}
+
+function resetClaimModal() {
+  showClaimStep('claimStep1');
+  hideClaimError();
+  document.querySelectorAll('.claim-modal__input').forEach(function(input) {
+    input.value = '';
+    input.classList.remove('claim-modal__input--error');
+  });
+  var btn = document.getElementById('claimSubmitBtn');
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Claim';
+  }
+}
+
+function showClaimStep(stepId) {
+  document.querySelectorAll('.claim-modal__step').forEach(function(step) {
+    step.classList.add('claim-modal__step--hidden');
+  });
+  var target = document.getElementById(stepId);
+  if (target) target.classList.remove('claim-modal__step--hidden');
+}
+
+function showClaimError(message) {
+  var bar = document.getElementById('claimErrorBar');
+  var text = document.getElementById('claimErrorText');
+  if (!bar || !text) return;
+  text.textContent = message;
+  bar.classList.remove('claim-modal__error-bar--hidden');
+}
+
+function hideClaimError() {
+  var bar = document.getElementById('claimErrorBar');
+  if (bar) bar.classList.add('claim-modal__error-bar--hidden');
+}
+
+function claimModalNext() {
+  hideClaimError();
+  var required1 = ['cm_claim_number', 'cm_customer_name', 'cm_address_line1', 'cm_city', 'cm_state', 'cm_zip'];
+  var valid = true;
+
+  required1.forEach(function(id) {
+    var field = document.getElementById(id);
+    if (!field) return;
+    field.classList.remove('claim-modal__input--error');
+    if (!field.value.trim()) {
+      field.classList.add('claim-modal__input--error');
+      valid = false;
+    }
+  });
+
+  if (!valid) {
+    showClaimError('Please fill in all required fields before continuing.');
+    return;
+  }
+
+  showClaimStep('claimStep2');
+  document.getElementById('cm_contact_name').focus();
+}
+
+function claimModalBack() {
+  hideClaimError();
+  showClaimStep('claimStep1');
+}
+
+function getClaimFormData() {
+  var fields = [
+    'cm_claim_number', 'cm_date_of_loss', 'cm_customer_name',
+    'cm_address_line1', 'cm_city', 'cm_state', 'cm_zip',
+    'cm_contact_name', 'cm_contact_email', 'cm_contact_phone',
+    'cm_vin', 'cm_year', 'cm_make', 'cm_model', 'cm_instructions'
+  ];
+  var data = {};
+  fields.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      var key = id.replace('cm_', '');
+      data[key] = el.value.trim();
+    }
+  });
+  data['special_instructions'] = data['instructions'];
+  delete data['instructions'];
+  return data;
+}
+
+async function submitClaim() {
+  hideClaimError();
+
+  var contactName = document.getElementById('cm_contact_name');
+  var contactEmail = document.getElementById('cm_contact_email');
+  var valid = true;
+
+  [contactName, contactEmail].forEach(function(field) {
+    if (!field) return;
+    field.classList.remove('claim-modal__input--error');
+    if (!field.value.trim()) {
+      field.classList.add('claim-modal__input--error');
+      valid = false;
+    }
+  });
+
+  if (!valid) {
+    showClaimError('Please provide your name and email before submitting.');
+    return;
+  }
+
+  var btn = document.getElementById('claimSubmitBtn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+  }
+
+  var payload = getClaimFormData();
+
+  try {
+    var response = await fetch(CLAIM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    var result = await response.json();
+
+    if (response.ok && result.success) {
+      var numEl = document.getElementById('claimSuccessNumber');
+      if (numEl && result.claim_number) {
+        numEl.textContent = 'Claim #: ' + result.claim_number;
+      }
+      showClaimStep('claimSuccess');
+    } else {
+      var errorMsg = result.error || 'Something went wrong. Please try again or email admin@flav8r.net.';
+      showClaimError(errorMsg);
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Claim';
+      }
+    }
+  } catch (err) {
+    showClaimError('Unable to reach the server. Please check your connection or email admin@flav8r.net.');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Submit Claim';
+    }
+  }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var modal = document.getElementById('claimModal');
+    if (modal && modal.classList.contains('claim-modal--open')) {
+      closeClaimModal();
+    }
+  }
+});

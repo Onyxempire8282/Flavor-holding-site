@@ -34,7 +34,7 @@
       <span class="nav__hamburger-bar"></span>
       <span class="nav__hamburger-bar"></span>
     </button>
-    <a href="#carriers" class="nav__cta">Assign Claims</a>
+    <a class="nav__cta" href="#" onclick="openClaimModal(); return false;">Assign Claims</a>
   </nav>
 
   <!-- ══ HERO ══════════════════════════════════════════════════ -->
@@ -57,7 +57,7 @@
     </p>
 
     <div class="hero__actions">
-      <a href="#carriers"   class="btn btn--primary">Assign Inspections</a>
+      <a class="btn btn--primary" href="#" onclick="openClaimModal(); return false;">Assign Inspections</a>
       <a href="#inspectors" class="btn btn--ghost">Join as Inspector</a>
     </div>
 
@@ -967,6 +967,148 @@
       </div>
     </div>
   </footer>
+
+  <!-- ASSIGN CLAIM MODAL -->
+  <div class="claim-modal" id="claimModal" role="dialog" aria-modal="true" aria-labelledby="claimModalTitle">
+    <div class="claim-modal__overlay" onclick="closeClaimModal()"></div>
+    <div class="claim-modal__panel">
+
+      <div class="claim-modal__header">
+        <div class="claim-modal__header-text">
+          <h2 class="claim-modal__title" id="claimModalTitle">Assign a Claim</h2>
+          <p class="claim-modal__subtitle">We'll assign an inspector and confirm within 24 hours.</p>
+        </div>
+        <button class="claim-modal__close" onclick="closeClaimModal()" aria-label="Close">&#10005;</button>
+      </div>
+
+      <!-- STEP 1: CLAIM INFO -->
+      <div class="claim-modal__step" id="claimStep1">
+        <p class="claim-modal__step-label">Step 1 of 2 — Claim &amp; Location</p>
+
+        <div class="claim-modal__form">
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_claim_number">Claim Number <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_claim_number" name="claim_number" placeholder="e.g. 2024-001234" autocomplete="off">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_date_of_loss">Date of Loss</label>
+            <input class="claim-modal__input" type="date" id="cm_date_of_loss" name="date_of_loss">
+          </div>
+
+          <div class="claim-modal__field">
+            <label class="claim-modal__label" for="cm_customer_name">Customer / Vehicle Owner Name <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_customer_name" name="customer_name" placeholder="Full name on claim">
+          </div>
+
+          <div class="claim-modal__field">
+            <label class="claim-modal__label" for="cm_address_line1">Inspection Address <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_address_line1" name="address_line1" placeholder="Street address where vehicle is located">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--third">
+            <label class="claim-modal__label" for="cm_city">City <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_city" name="city">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--sixth">
+            <label class="claim-modal__label" for="cm_state">State <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_state" name="state" placeholder="NC" maxlength="2">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--sixth">
+            <label class="claim-modal__label" for="cm_zip">ZIP <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_zip" name="zip" placeholder="28201" maxlength="10">
+          </div>
+
+          <div class="claim-modal__actions">
+            <button class="claim-modal__btn claim-modal__btn--secondary" onclick="closeClaimModal()">Cancel</button>
+            <button class="claim-modal__btn claim-modal__btn--primary" onclick="claimModalNext()">Next &#8594;</button>
+          </div>
+
+        </div><!-- /.claim-modal__form -->
+      </div><!-- /#claimStep1 -->
+
+      <!-- STEP 2: CONTACT + VEHICLE -->
+      <div class="claim-modal__step claim-modal__step--hidden" id="claimStep2">
+        <p class="claim-modal__step-label">Step 2 of 2 — Contact &amp; Vehicle</p>
+
+        <div class="claim-modal__form">
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_contact_name">Your Name <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="text" id="cm_contact_name" name="contact_name" placeholder="Adjuster or contact name">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_contact_email">Your Email <span class="claim-modal__required">*</span></label>
+            <input class="claim-modal__input" type="email" id="cm_contact_email" name="contact_email" placeholder="you@company.com">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_contact_phone">Your Phone</label>
+            <input class="claim-modal__input" type="tel" id="cm_contact_phone" name="contact_phone" placeholder="(704) 555-0100">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--half">
+            <label class="claim-modal__label" for="cm_vin">VIN</label>
+            <input class="claim-modal__input" type="text" id="cm_vin" name="vin" placeholder="17-character VIN" maxlength="17">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--sixth">
+            <label class="claim-modal__label" for="cm_year">Year</label>
+            <input class="claim-modal__input" type="text" id="cm_year" name="year" placeholder="2021" maxlength="4">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--third">
+            <label class="claim-modal__label" for="cm_make">Make</label>
+            <input class="claim-modal__input" type="text" id="cm_make" name="make" placeholder="Honda">
+          </div>
+
+          <div class="claim-modal__field claim-modal__field--third">
+            <label class="claim-modal__label" for="cm_model">Model</label>
+            <input class="claim-modal__input" type="text" id="cm_model" name="model" placeholder="Accord">
+          </div>
+
+          <div class="claim-modal__field">
+            <label class="claim-modal__label" for="cm_instructions">Special Instructions</label>
+            <textarea class="claim-modal__input claim-modal__input--textarea" id="cm_instructions" name="special_instructions" rows="3" placeholder="Gate codes, contact at location, access notes, etc."></textarea>
+          </div>
+
+          <div class="claim-modal__actions">
+            <button class="claim-modal__btn claim-modal__btn--secondary" onclick="claimModalBack()">&#8592; Back</button>
+            <button class="claim-modal__btn claim-modal__btn--primary" id="claimSubmitBtn" onclick="submitClaim()">Submit Claim</button>
+          </div>
+
+        </div><!-- /.claim-modal__form -->
+      </div><!-- /#claimStep2 -->
+
+      <!-- SUCCESS STATE -->
+      <div class="claim-modal__step claim-modal__step--hidden" id="claimSuccess">
+        <div class="claim-modal__success">
+          <div class="claim-modal__success-icon">&#10003;</div>
+          <h3 class="claim-modal__success-title">Claim Submitted</h3>
+          <p class="claim-modal__success-body">
+            Your assignment has been received. You'll get a status update within 24 hours
+            at the email you provided. Use the claim tracker to follow progress anytime.
+          </p>
+          <p class="claim-modal__success-claim-number" id="claimSuccessNumber"></p>
+          <div class="claim-modal__actions claim-modal__actions--centered">
+            <a class="claim-modal__btn claim-modal__btn--secondary" href="/track.html">Track This Claim</a>
+            <button class="claim-modal__btn claim-modal__btn--primary" onclick="closeClaimModal()">Done</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERROR STATE -->
+      <div class="claim-modal__error-bar claim-modal__error-bar--hidden" id="claimErrorBar">
+        <span class="claim-modal__error-text" id="claimErrorText"></span>
+      </div>
+
+    </div><!-- /.claim-modal__panel -->
+  </div>
+  <!-- END ASSIGN CLAIM MODAL -->
 
   <script src="main.js"></script>
 </body>
