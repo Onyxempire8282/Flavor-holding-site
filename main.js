@@ -247,7 +247,7 @@ function hideClaimError() {
 
 function claimModalNext() {
   hideClaimError();
-  var required1 = ['cm_claim_number', 'cm_customer_name', 'cm_address_line1', 'cm_city', 'cm_state', 'cm_zip'];
+  var required1 = ['cm_customer_name', 'cm_address_line1', 'cm_city', 'cm_state', 'cm_zip'];
   var valid = true;
 
   required1.forEach(function(id) {
