@@ -1034,11 +1034,16 @@
         }
 
         // New portal sections
-        renderPhotos(data.claim_id, data.firm_id);
+        console.log('[tracker] RPC data keys:', Object.keys(data));
+        console.log('[tracker] claim_id:', data.claim_id, '| id:', data.id, '| firm_id:', data.firm_id);
+        var resolvedClaimId = data.claim_id || data.id;
+        var resolvedFirmId  = data.firm_id;
+        renderPhotos(resolvedClaimId, resolvedFirmId);
         renderDocuments(data.documents);
-        renderPackageButton(data.claim_id, data.firm_id);
+        renderPackageButton(resolvedClaimId, resolvedFirmId);
         renderMessages(data.messages);
       } catch (e) {
+        console.error('[tracker] lookup error:', e);
         errorBlock.classList.add('tracker__error--visible');
       }
 
@@ -1051,6 +1056,7 @@
       photosSection.style.display = '';
 
       grid.innerHTML = '<p class="portal-section__muted">Loading photos\u2026</p>';
+      console.log('[tracker] renderPhotos called with claimId:', claimId, '| firmId:', firmId);
 
       try {
         var res = await sbCD
@@ -1059,6 +1065,7 @@
           .eq('claim_id', claimId)
           .order('order_index');
 
+        console.log('[tracker] claim_photos query result:', { error: res.error, count: res.data ? res.data.length : 0, data: res.data });
         var photos = res.data;
         if (res.error || !photos || photos.length === 0) {
           grid.innerHTML = '<p class="portal-section__muted">No photos available.</p>';
